@@ -13,6 +13,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 endif()
 
 add_subdirectory(external/Core)
+add_subdirectory(external/nml)
 
 set(SCRIPTS_DIRECTORY "scripts/")
 file(GLOB_RECURSE SCRIPTS "${SCRIPTS_DIRECTORY}/*.h")
@@ -20,7 +21,7 @@ message(STATUS ${SCRIPTS})
 
 add_executable(${PROJECT_NAME} main.cpp ${SCRIPTS})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE NutshellEngine-Core ${NTSHENGN_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PRIVATE NutshellEngine-Core nml ${NTSHENGN_LIBRARIES})
 
 target_compile_options(${PROJECT_NAME} PRIVATE
 	$<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
