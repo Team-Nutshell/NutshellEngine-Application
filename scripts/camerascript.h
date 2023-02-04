@@ -12,16 +12,12 @@ struct CameraScript : NtshEngn::Script {
 			m_prevMouseX = windowModule->getWidth(NTSHENGN_MAIN_WINDOW) / 2;
 			m_prevMouseY = windowModule->getHeight(NTSHENGN_MAIN_WINDOW) / 2;
 			windowModule->setCursorPosition(NTSHENGN_MAIN_WINDOW, m_prevMouseX, m_prevMouseY);
-
-			const NtshEngn::Transform transform = ecs->getComponent<NtshEngn::Transform>(entityID);
-			nml::vec3 cameraRotation = nml::vec3(transform.rotation[0], transform.rotation[1], transform.rotation[2]);
-
-			m_yaw = std::atan2(cameraRotation.z, cameraRotation.x) * toDeg;
-			m_pitch = -std::asin(cameraRotation.y) * toDeg;
 		}
 	}
 
 	void update(double dt) {
+		NTSHENGN_UNUSED(dt);
+
 		if (windowModule && windowModule->isOpen(NTSHENGN_MAIN_WINDOW)) {
 			if (windowModule->getKeyState(NTSHENGN_MAIN_WINDOW, NtshEngn::InputKeyboardKey::R) == NtshEngn::InputState::Pressed) {
 				m_mouseMiddleMode = !m_mouseMiddleMode;
@@ -34,7 +30,11 @@ struct CameraScript : NtshEngn::Script {
 			}
 
 			NtshEngn::Transform& transform = ecs->getComponent<NtshEngn::Transform>(entityID);
-			nml::vec3 cameraRotation = nml::vec3(transform.rotation[0], transform.rotation[1], transform.rotation[2]);
+			nml::vec3 cameraPosition = nml::vec3(transform.position.data());
+			nml::vec3 cameraRotation = nml::vec3(transform.rotation.data());
+
+			NtshEngn::Transform otherTransform = ecs->getComponent<NtshEngn::Transform>(m_other);
+			nml::vec3 otherPosition = nml::vec3(otherTransform.position.data());
 
 			if (m_mouseMiddleMode) {
 				const int mouseX = windowModule->getCursorPositionX(NTSHENGN_MAIN_WINDOW);
@@ -52,48 +52,20 @@ struct CameraScript : NtshEngn::Script {
 
 				m_yaw = std::fmod(m_yaw + xOffset, 360.0f);
 				m_pitch = std::max(-89.0f, std::min(89.0f, m_pitch + yOffset));
-
-				float yawRad = m_yaw * toRad;
-				float pitchRad = m_pitch * toRad;
-
-				cameraRotation.x = std::cos(pitchRad) * std::cos(yawRad);
-				cameraRotation.y = -std::sin(pitchRad);
-				cameraRotation.z = std::cos(pitchRad) * std::sin(yawRad);
-				cameraRotation = nml::normalize(cameraRotation);
 			}
 
-			const float cameraSpeed = m_cameraSpeed * static_cast<float>(dt);
+			float yawRad = m_yaw * toRad;
+			float pitchRad = m_pitch * toRad;
 
-			nml::vec3 cameraPosition = nml::vec3(transform.position[0], transform.position[1], transform.position[2]);
-			if (windowModule->getKeyState(NTSHENGN_MAIN_WINDOW, NtshEngn::InputKeyboardKey::W) == NtshEngn::InputState::Held) {
-				cameraPosition += (cameraRotation * cameraSpeed);
-			}
-			if (windowModule->getKeyState(NTSHENGN_MAIN_WINDOW, NtshEngn::InputKeyboardKey::S) == NtshEngn::InputState::Held) {
-				cameraPosition -= (cameraRotation * cameraSpeed);
-			}
-			if (windowModule->getKeyState(NTSHENGN_MAIN_WINDOW, NtshEngn::InputKeyboardKey::A) == NtshEngn::InputState::Held) {
-				nml::vec3 t = nml::normalize(nml::vec3(-cameraRotation.z, 0.0, cameraRotation.x));
-				cameraPosition.x -= (t.x * cameraSpeed);
-				cameraPosition.z -= (t.z * cameraSpeed);
-			}
-			if (windowModule->getKeyState(NTSHENGN_MAIN_WINDOW, NtshEngn::InputKeyboardKey::D) == NtshEngn::InputState::Held) {
-				nml::vec3 t = nml::normalize(nml::vec3(-cameraRotation.z, 0.0, cameraRotation.x));
-				cameraPosition.x += (t.x * cameraSpeed);
-				cameraPosition.z += (t.z * cameraSpeed);
-			}
-			if (windowModule->getKeyState(NTSHENGN_MAIN_WINDOW, NtshEngn::InputKeyboardKey::Space) == NtshEngn::InputState::Held) {
-				cameraPosition.y += cameraSpeed;
-			}
-			if (windowModule->getKeyState(NTSHENGN_MAIN_WINDOW, NtshEngn::InputKeyboardKey::Shift) == NtshEngn::InputState::Held) {
-				cameraPosition.y -= cameraSpeed;
-			}
+			cameraPosition.x = std::cos(pitchRad) * std::cos(yawRad);
+			cameraPosition.y = -std::sin(pitchRad);
+			cameraPosition.z = std::cos(pitchRad) * std::sin(yawRad);
+			cameraPosition *= m_distance;
+			cameraPosition += otherPosition;
+			cameraRotation = normalize(otherPosition - cameraPosition);
 
 			transform.position = { cameraPosition.x, cameraPosition.y, cameraPosition.z };
 			transform.rotation = { cameraRotation.x, cameraRotation.y, cameraRotation.z };
-
-			if (windowModule->getMouseButtonState(NTSHENGN_MAIN_WINDOW, NtshEngn::InputMouseButton::Two) == NtshEngn::InputState::Pressed) {
-				ecs->destroyEntity(0);
-			}
 		}
 	}
 
@@ -114,4 +86,8 @@ private:
 
 	float m_yaw = 0.0f;
 	float m_pitch = 0.0f;
+
+	const float m_distance = 4.0f;
+
+	NtshEngn::Entity m_other = 1;
 };

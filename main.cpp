@@ -1,5 +1,6 @@
 #include "external/Core/src/ntshengn_core.h"
 #include "scripts/camerascript.h"
+#include "scripts/cubescript.h"
 
 void scene(NtshEngn::Core& core) {
 	NtshEngn::ECS* ecs = core.getECS();
@@ -86,6 +87,10 @@ void scene(NtshEngn::Core& core) {
 	cubeRenderable.mesh = &cubeMesh->primitives[0].first;
 	cubeRenderable.material = &cubeMesh->primitives[0].second;
 	ecs->addComponent(cube, cubeRenderable);
+
+	NtshEngn::Scriptable cubeScriptable;
+	cubeScriptable.script = std::make_unique<CubeScript>();
+	ecs->addComponent(cube, cubeScriptable);
 }
 
 int main() {
