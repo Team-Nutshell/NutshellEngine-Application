@@ -90,10 +90,6 @@ struct CameraScript : NtshEngn::Script {
 
 			transform.position = { cameraPosition.x, cameraPosition.y, cameraPosition.z };
 			transform.rotation = { cameraRotation.x, cameraRotation.y, cameraRotation.z };
-
-			if (windowModule->getMouseButtonState(NTSHENGN_MAIN_WINDOW, NtshEngn::InputMouseButton::Two) == NtshEngn::InputState::Pressed) {
-				ecs->destroyEntity(0);
-			}
 		}
 	}
 
