@@ -51,7 +51,7 @@ struct CameraScript : NtshEngn::Script {
 				m_prevMouseY = mouseY;
 
 				m_yaw = std::fmod(m_yaw + xOffset, 360.0f);
-				m_pitch = std::max(-89.0f, std::min(89.0f, m_pitch + yOffset));
+				m_pitch = std::max(-89.0f, std::min(89.0f, m_pitch - yOffset));
 			}
 
 			float yawRad = m_yaw * toRad;
