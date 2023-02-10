@@ -1,10 +1,8 @@
-# NutshellEngine-Application - Camera Simple
-![Camera Simple](https://i.imgur.com/e2v6yIl.png)
+# NutshellEngine-Application - Camera Third Person
+![Camera Third Person](https://i.imgur.com/e2v6yIl.png)
 
-Application creating a camera and a cube using the ECS and Asset Manager.
+Application creating a third person camera and a cube using the ECS and Asset Manager.
 
 Camera controls:
-- ``WASD`` for movement.
-- ``Space`` to go up.
-- ``Shift`` to go down.
+- ``WASD`` to move the cube.
 - ``R`` to show/hide the mouse cursor.
