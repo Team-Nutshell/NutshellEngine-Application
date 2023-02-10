@@ -91,6 +91,17 @@ void scene(NtshEngn::Core& core) {
 	NtshEngn::Scriptable cubeScriptable;
 	cubeScriptable.script = std::make_unique<CubeScript>();
 	ecs->addComponent(cube, cubeScriptable);
+
+	// Create a light
+	NtshEngn::Entity light = ecs->createEntity();
+
+	NtshEngn::Transform& lightTransform = ecs->getComponent<NtshEngn::Transform>(light);
+	lightTransform.rotation = { 1.0f, -1.0f, 0.0f };
+
+	NtshEngn::Light lightLight;
+	lightLight.type = NtshEngn::LightType::Directional;
+	lightLight.color = { 1.0f, 1.0f, 1.0f };
+	ecs->addComponent(light, lightLight);
 }
 
 int main() {
