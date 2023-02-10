@@ -1,7 +1,7 @@
-# NutshellEngine-Application - Camera Simple
+# NutshellEngine-Application - Camera First Person
 ![Camera Simple](https://i.imgur.com/e2v6yIl.png)
 
-Application creating a camera and a cube using the ECS and Asset Manager.
+Application creating a first person camera and a cube using the ECS and Asset Manager.
 
 Camera controls:
 - ``WASD`` for movement.
