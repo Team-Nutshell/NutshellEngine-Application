@@ -86,6 +86,17 @@ void scene(NtshEngn::Core& core) {
 	cubeRenderable.mesh = &cubeMesh->primitives[0].first;
 	cubeRenderable.material = &cubeMesh->primitives[0].second;
 	ecs->addComponent(cube, cubeRenderable);
+
+	// Create a light
+	NtshEngn::Entity light = ecs->createEntity();
+
+	NtshEngn::Transform& lightTransform = ecs->getComponent<NtshEngn::Transform>(light);
+	lightTransform.rotation = { 1.0f, -1.0f, 0.0f };
+
+	NtshEngn::Light lightLight;
+	lightLight.type = NtshEngn::LightType::Directional;
+	lightLight.color = { 1.0f, 1.0f, 1.0f };
+	ecs->addComponent(light, lightLight);
 }
 
 int main() {
