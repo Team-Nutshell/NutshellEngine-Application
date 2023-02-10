@@ -1,5 +1,5 @@
 # NutshellEngine-Application - Camera First Person
-![Camera Simple](https://i.imgur.com/e2v6yIl.png)
+![Camera First Person](https://i.imgur.com/e2v6yIl.png)
 
 Application creating a first person camera and a cube using the ECS and Asset Manager.
 
