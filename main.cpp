@@ -92,6 +92,11 @@ void scene(NtshEngn::Core& core) {
 	cubeScriptable.script = std::make_unique<CubeScript>();
 	ecs->addComponent(cube, cubeScriptable);
 
+	NtshEngn::AABBCollidable cubeCollidable;
+	cubeCollidable.collider.min = { -1.0f, -1.0f, -1.0f };
+	cubeCollidable.collider.max = { 1.0f, 1.0f, 1.0f };
+	ecs->addComponent(cube, cubeCollidable);
+
 	// Create a light
 	NtshEngn::Entity light = ecs->createEntity();
 
