@@ -87,6 +87,11 @@ void scene(NtshEngn::Core& core) {
 	cubeRenderable.material = &cubeMesh->primitives[0].second;
 	ecs->addComponent(cube, cubeRenderable);
 
+	NtshEngn::AABBCollidable cubeCollidable;
+	cubeCollidable.collider.min = { -1.0f, -1.0f, -1.0f };
+	cubeCollidable.collider.max = { 1.0f, 1.0f, 1.0f };
+	ecs->addComponent(cube, cubeCollidable);
+
 	// Create a light
 	NtshEngn::Entity light = ecs->createEntity();
 
