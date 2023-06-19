@@ -12,7 +12,16 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 	list(APPEND NTSHENGN_LIBRARIES ${CMAKE_DL_LIBS})
 endif()
 
+set(NTSHENGN_CORE_PATH "NtshEngn_Core_NOTFOUND" CACHE PATH "The directory containing NutshellEngine's core.")
+if(NOT ${NTSHENGN_CORE_PATH} STREQUAL "NtshEngn_Core_NOTFOUND" AND EXISTS ${NTSHENGN_CORE_PATH})
+	file(COPY ${NTSHENGN_CORE_PATH}/ DESTINATION ${CMAKE_SOURCE_DIR}/external/Core)
+	message(STATUS "Copy NutshellEngine's core from ${NTSHENGN_CORE_PATH} to ${CMAKE_SOURCE_DIR}/external/Core")
+else()
+	message(SEND_ERROR "Could not find the directory containing NutshellEngine's core.")
+endif()
+
 add_subdirectory(external/Core)
+
 add_subdirectory(external/nml)
 
 set(SCRIPTS_DIRECTORY "scripts/")
