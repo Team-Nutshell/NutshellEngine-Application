@@ -1,6 +1,8 @@
-cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 set(NAME NutshellEngine-Application)
 project(${NAME} VERSION 0.0.1 LANGUAGES C CXX)
+
+include(FetchContent)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -14,13 +16,21 @@ endif()
 
 set(NTSHENGN_CORE_PATH "NtshEngn_Core_NOTFOUND" CACHE PATH "The directory containing NutshellEngine's core.")
 if(NOT ${NTSHENGN_CORE_PATH} STREQUAL "NtshEngn_Core_NOTFOUND" AND EXISTS ${NTSHENGN_CORE_PATH})
+	message(STATUS "Copy NutshellEngine\'s core from ${NTSHENGN_CORE_PATH} to ${CMAKE_SOURCE_DIR}/external/Core")
 	file(COPY ${NTSHENGN_CORE_PATH}/ DESTINATION ${CMAKE_SOURCE_DIR}/external/Core)
-	message(STATUS "Copy NutshellEngine's core from ${NTSHENGN_CORE_PATH} to ${CMAKE_SOURCE_DIR}/external/Core")
-else()
-	message(SEND_ERROR "Could not find the directory containing NutshellEngine's core.")
-endif()
 
-add_subdirectory(external/Core)
+	add_subdirectory(external/Core)
+else()
+	message(STATUS "Copy NutshellEngine\'s core from Git repository to ${CMAKE_CURRENT_SOURCE_DIR}/external/Core")
+	FetchContent_Declare(
+		Core
+		GIT_REPOSITORY https://github.com/Team-Nutshell/NutshellEngine-Core
+		GIT_TAG main
+		SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/Core"
+	)
+
+	FetchContent_MakeAvailable(Core)
+endif()
 
 add_subdirectory(external/nml)
 
