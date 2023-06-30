@@ -6,26 +6,26 @@ struct CameraScript : NtshEngn::Script {
 	NTSHENGN_SCRIPT(CameraScript);
 
 	void init() {
-		if (windowModule && windowModule->isOpen(NTSHENGN_MAIN_WINDOW)) {
-			windowModule->setCursorVisibility(NTSHENGN_MAIN_WINDOW, !m_mouseMiddleMode);
+		if (windowModule && windowModule->isOpen(windowModule->getMainWindowID())) {
+			windowModule->setCursorVisibility(windowModule->getMainWindowID(), !m_mouseMiddleMode);
 
-			m_prevMouseX = windowModule->getWidth(NTSHENGN_MAIN_WINDOW) / 2;
-			m_prevMouseY = windowModule->getHeight(NTSHENGN_MAIN_WINDOW) / 2;
-			windowModule->setCursorPosition(NTSHENGN_MAIN_WINDOW, m_prevMouseX, m_prevMouseY);
+			m_prevMouseX = windowModule->getWidth(windowModule->getMainWindowID()) / 2;
+			m_prevMouseY = windowModule->getHeight(windowModule->getMainWindowID()) / 2;
+			windowModule->setCursorPosition(windowModule->getMainWindowID(), m_prevMouseX, m_prevMouseY);
 		}
 	}
 
 	void update(double dt) {
 		NTSHENGN_UNUSED(dt);
 
-		if (windowModule && windowModule->isOpen(NTSHENGN_MAIN_WINDOW)) {
-			if (windowModule->getKeyState(NTSHENGN_MAIN_WINDOW, NtshEngn::InputKeyboardKey::R) == NtshEngn::InputState::Pressed) {
+		if (windowModule && windowModule->isOpen(windowModule->getMainWindowID())) {
+			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::R) == NtshEngn::InputState::Pressed) {
 				m_mouseMiddleMode = !m_mouseMiddleMode;
-				windowModule->setCursorVisibility(NTSHENGN_MAIN_WINDOW, !m_mouseMiddleMode);
+				windowModule->setCursorVisibility(windowModule->getMainWindowID(), !m_mouseMiddleMode);
 				if (m_mouseMiddleMode) {
-					m_prevMouseX = windowModule->getWidth(NTSHENGN_MAIN_WINDOW) / 2;
-					m_prevMouseY = windowModule->getHeight(NTSHENGN_MAIN_WINDOW) / 2;
-					windowModule->setCursorPosition(NTSHENGN_MAIN_WINDOW, m_prevMouseX, m_prevMouseY);
+					m_prevMouseX = windowModule->getWidth(windowModule->getMainWindowID()) / 2;
+					m_prevMouseY = windowModule->getHeight(windowModule->getMainWindowID()) / 2;
+					windowModule->setCursorPosition(windowModule->getMainWindowID(), m_prevMouseX, m_prevMouseY);
 				}
 			}
 
@@ -37,12 +37,12 @@ struct CameraScript : NtshEngn::Script {
 			nml::vec3 otherPosition = nml::vec3(otherTransform.position.data());
 
 			if (m_mouseMiddleMode) {
-				const int mouseX = windowModule->getCursorPositionX(NTSHENGN_MAIN_WINDOW);
-				const int mouseY = windowModule->getCursorPositionY(NTSHENGN_MAIN_WINDOW);
+				const int mouseX = windowModule->getCursorPositionX(windowModule->getMainWindowID());
+				const int mouseY = windowModule->getCursorPositionY(windowModule->getMainWindowID());
 
-				m_prevMouseX = windowModule->getWidth(NTSHENGN_MAIN_WINDOW) / 2;
-				m_prevMouseY = windowModule->getHeight(NTSHENGN_MAIN_WINDOW) / 2;
-				windowModule->setCursorPosition(NTSHENGN_MAIN_WINDOW, m_prevMouseX, m_prevMouseY);
+				m_prevMouseX = windowModule->getWidth(windowModule->getMainWindowID()) / 2;
+				m_prevMouseY = windowModule->getHeight(windowModule->getMainWindowID()) / 2;
+				windowModule->setCursorPosition(windowModule->getMainWindowID(), m_prevMouseX, m_prevMouseY);
 
 				const float xOffset = (mouseX - m_prevMouseX) * m_mouseSensitivity;
 				const float yOffset = (mouseY - m_prevMouseY) * m_mouseSensitivity;
