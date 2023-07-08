@@ -1,4 +1,4 @@
-#include "external/Core/src/ntshengn_core.h"
+#include "Core/src/ntshengn_core.h"
 #include "scripts/camerascript.h"
 #include "scripts/cubescript.h"
 
