@@ -1,4 +1,4 @@
-#include "../external/Core/external/Common/resources/ntshengn_resources_scripting.h"
+#include "../Core/Common/resources/ntshengn_resources_scripting.h"
 #include "../external/nml/include/nml.h"
 #include <cmath>
 
