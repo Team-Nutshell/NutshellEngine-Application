@@ -54,6 +54,8 @@ struct CameraScript : public NtshEngn::Script {
 				m_pitch = std::max(-89.0f, std::min(89.0f, m_pitch - yOffset));
 			}
 
+			m_distance = std::max(0.0f, std::min(m_distance - windowModule->getMouseScrollOffsetY(windowModule->getMainWindowID()), 100.0f));
+
 			float yawRad = m_yaw * toRad;
 			float pitchRad = m_pitch * toRad;
 
@@ -87,7 +89,7 @@ private:
 	float m_yaw = 0.0f;
 	float m_pitch = 0.0f;
 
-	const float m_distance = 4.0f;
+	float m_distance = 4.0f;
 
 	NtshEngn::Entity m_other = 1;
 };
