@@ -2,7 +2,7 @@
 #include "../external/nml/include/nml.h"
 #include <cmath>
 
-struct CameraScript : NtshEngn::Script {
+struct CameraScript : public NtshEngn::Script {
 	NTSHENGN_SCRIPT(CameraScript);
 
 	void init() {
