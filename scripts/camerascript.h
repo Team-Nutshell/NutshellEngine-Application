@@ -1,5 +1,5 @@
 #include "../Core/Common/resources/ntshengn_resources_scripting.h"
-#include "../external/nml/include/nml.h"
+#include "../Core/Common/utils/ntshengn_utils_math.h"
 #include <cmath>
 
 struct CameraScript : public NtshEngn::Script {
@@ -30,11 +30,11 @@ struct CameraScript : public NtshEngn::Script {
 			}
 
 			NtshEngn::Transform& transform = ecs->getComponent<NtshEngn::Transform>(entityID);
-			nml::vec3 cameraPosition = nml::vec3(transform.position.data());
-			nml::vec3 cameraRotation = nml::vec3(transform.rotation.data());
+			NtshEngn::Math::vec3 cameraPosition = NtshEngn::Math::vec3(transform.position.data());
+			NtshEngn::Math::vec3 cameraRotation = NtshEngn::Math::vec3(transform.rotation.data());
 
 			NtshEngn::Transform otherTransform = ecs->getComponent<NtshEngn::Transform>(m_other);
-			nml::vec3 otherPosition = nml::vec3(otherTransform.position.data());
+			NtshEngn::Math::vec3 otherPosition = NtshEngn::Math::vec3(otherTransform.position.data());
 
 			if (m_mouseMiddleMode) {
 				const int mouseX = windowModule->getCursorPositionX(windowModule->getMainWindowID());

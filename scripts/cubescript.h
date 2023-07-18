@@ -1,5 +1,5 @@
 #include "../Core/Common/resources/ntshengn_resources_scripting.h"
-#include "../external/nml/include/nml.h"
+#include "../Core/Common/utils/ntshengn_utils_math.h"
 #include <cmath>
 
 struct CubeScript : NtshEngn::Script {
@@ -14,8 +14,8 @@ struct CubeScript : NtshEngn::Script {
 			NtshEngn::Transform& cameraTransform = ecs->getComponent<NtshEngn::Transform>(m_camera);
 			const float cubeSpeed = m_cubeSpeed * static_cast<float>(dt);
 
-			nml::vec3 position = nml::vec3(transform.position.data());
-			nml::vec3 cameraRotation = nml::vec3(cameraTransform.rotation.data());
+			NtshEngn::Math::vec3 position = NtshEngn::Math::vec3(transform.position.data());
+			NtshEngn::Math::vec3 cameraRotation = NtshEngn::Math::vec3(cameraTransform.rotation.data());
 			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::W) == NtshEngn::InputState::Held) {
 				position.x += (cameraRotation.x * cubeSpeed);
 				position.z += (cameraRotation.z * cubeSpeed);
@@ -25,12 +25,12 @@ struct CubeScript : NtshEngn::Script {
 				position.z -= (cameraRotation.z * cubeSpeed);
 			}
 			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::A) == NtshEngn::InputState::Held) {
-				nml::vec3 t = nml::normalize(nml::vec3(-cameraRotation.z, 0.0, cameraRotation.x));
+				NtshEngn::Math::vec3 t = NtshEngn::Math::normalize(NtshEngn::Math::vec3(-cameraRotation.z, 0.0, cameraRotation.x));
 				position.x -= (t.x * cubeSpeed);
 				position.z -= (t.z * cubeSpeed);
 			}
 			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::D) == NtshEngn::InputState::Held) {
-				nml::vec3 t = nml::normalize(nml::vec3(-cameraRotation.z, 0.0, cameraRotation.x));
+				NtshEngn::Math::vec3 t = NtshEngn::Math::normalize(NtshEngn::Math::vec3(-cameraRotation.z, 0.0, cameraRotation.x));
 				position.x += (t.x * cubeSpeed);
 				position.z += (t.z * cubeSpeed);
 			}
