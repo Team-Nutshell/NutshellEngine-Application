@@ -1,5 +1,5 @@
 #include "../Core/Common/resources/ntshengn_resources_scripting.h"
-#include "../external/nml/include/nml.h"
+#include "../Core/Common/utils/ntshengn_utils_math.h"
 #include <cmath>
 
 struct CameraScript : public NtshEngn::Script {
@@ -14,7 +14,7 @@ struct CameraScript : public NtshEngn::Script {
 			windowModule->setCursorPosition(windowModule->getMainWindowID(), m_prevMouseX, m_prevMouseY);
 
 			const NtshEngn::Transform transform = ecs->getComponent<NtshEngn::Transform>(entityID);
-			nml::vec3 cameraRotation = nml::vec3(transform.rotation[0], transform.rotation[1], transform.rotation[2]);
+			NtshEngn::Math::vec3 cameraRotation = NtshEngn::Math::vec3(transform.rotation[0], transform.rotation[1], transform.rotation[2]);
 
 			m_yaw = std::atan2(cameraRotation.z, cameraRotation.x) * toDeg;
 			m_pitch = -std::asin(cameraRotation.y) * toDeg;
@@ -34,7 +34,7 @@ struct CameraScript : public NtshEngn::Script {
 			}
 
 			NtshEngn::Transform& transform = ecs->getComponent<NtshEngn::Transform>(entityID);
-			nml::vec3 cameraRotation = nml::vec3(transform.rotation[0], transform.rotation[1], transform.rotation[2]);
+			NtshEngn::Math::vec3 cameraRotation = NtshEngn::Math::vec3(transform.rotation[0], transform.rotation[1], transform.rotation[2]);
 
 			if (m_mouseMiddleMode) {
 				const int mouseX = windowModule->getCursorPositionX(windowModule->getMainWindowID());
@@ -59,12 +59,12 @@ struct CameraScript : public NtshEngn::Script {
 				cameraRotation.x = std::cos(pitchRad) * std::cos(yawRad);
 				cameraRotation.y = -std::sin(pitchRad);
 				cameraRotation.z = std::cos(pitchRad) * std::sin(yawRad);
-				cameraRotation = nml::normalize(cameraRotation);
+				cameraRotation = NtshEngn::Math::normalize(cameraRotation);
 			}
 
 			const float cameraSpeed = m_cameraSpeed * static_cast<float>(dt);
 
-			nml::vec3 cameraPosition = nml::vec3(transform.position[0], transform.position[1], transform.position[2]);
+			NtshEngn::Math::vec3 cameraPosition = NtshEngn::Math::vec3(transform.position[0], transform.position[1], transform.position[2]);
 			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::W) == NtshEngn::InputState::Held) {
 				cameraPosition += (cameraRotation * cameraSpeed);
 			}
@@ -72,12 +72,12 @@ struct CameraScript : public NtshEngn::Script {
 				cameraPosition -= (cameraRotation * cameraSpeed);
 			}
 			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::A) == NtshEngn::InputState::Held) {
-				nml::vec3 t = nml::normalize(nml::vec3(-cameraRotation.z, 0.0, cameraRotation.x));
+				NtshEngn::Math::vec3 t = NtshEngn::Math::normalize(NtshEngn::Math::vec3(-cameraRotation.z, 0.0, cameraRotation.x));
 				cameraPosition.x -= (t.x * cameraSpeed);
 				cameraPosition.z -= (t.z * cameraSpeed);
 			}
 			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::D) == NtshEngn::InputState::Held) {
-				nml::vec3 t = nml::normalize(nml::vec3(-cameraRotation.z, 0.0, cameraRotation.x));
+				NtshEngn::Math::vec3 t = NtshEngn::Math::normalize(NtshEngn::Math::vec3(-cameraRotation.z, 0.0, cameraRotation.x));
 				cameraPosition.x += (t.x * cameraSpeed);
 				cameraPosition.z += (t.z * cameraSpeed);
 			}
