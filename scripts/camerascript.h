@@ -1,4 +1,5 @@
 #include "../Core/Common/resources/ntshengn_resources_scripting.h"
+#include "../Core/Common/module_interfaces/ntshengn_window_module_interface.h"
 #include "../Core/Common/utils/ntshengn_utils_math.h"
 #include <cmath>
 
