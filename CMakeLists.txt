@@ -32,7 +32,10 @@ else()
 	FetchContent_MakeAvailable(Core)
 endif()
 
-set(SCRIPTS_DIRECTORY "scripts/")
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+execute_process(COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/generate_scriptable_factory.py ${CMAKE_CURRENT_SOURCE_DIR})
+
+set(SCRIPTS_DIRECTORY "scripts")
 file(GLOB_RECURSE SCRIPTS "${SCRIPTS_DIRECTORY}/*.h")
 message(STATUS ${SCRIPTS})
 

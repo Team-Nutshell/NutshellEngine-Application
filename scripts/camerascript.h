@@ -1,4 +1,5 @@
 #include "../Core/Common/resources/ntshengn_resources_scripting.h"
+#include "../Core/Common/module_interfaces/ntshengn_window_module_interface.h"
 #include "../Core/Common/utils/ntshengn_utils_math.h"
 #include <cmath>
 
@@ -14,7 +15,7 @@ struct CameraScript : public NtshEngn::Script {
 			windowModule->setCursorPosition(windowModule->getMainWindowID(), m_prevMouseX, m_prevMouseY);
 
 			const NtshEngn::Transform transform = ecs->getComponent<NtshEngn::Transform>(entityID);
-			NtshEngn::Math::vec3 cameraRotation = NtshEngn::Math::vec3(transform.rotation[0], transform.rotation[1], transform.rotation[2]);
+			NtshEngn::Math::vec3 cameraRotation = NtshEngn::Math::normalize(NtshEngn::Math::vec3(transform.rotation[0], transform.rotation[1], transform.rotation[2]));
 
 			m_yaw = std::atan2(cameraRotation.z, cameraRotation.x) * toDeg;
 			m_pitch = -std::asin(cameraRotation.y) * toDeg;
