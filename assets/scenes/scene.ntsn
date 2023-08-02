@@ -26,7 +26,7 @@
 		{
 			"name": "Cube",
 			"renderable": {
-				"modelPath": "assets/models/cube.obj"
+				"modelPath": "assets/models/model.ntmd"
 			},
 			"collidable": {
 				"type": "AABB",
