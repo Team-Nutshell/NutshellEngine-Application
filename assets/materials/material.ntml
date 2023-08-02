@@ -1,0 +1,6 @@
+{
+	"diffuseTexture": {
+		"imagePath": "assets/images/image.ntim",
+		"imageSamplerPath": "assets/image_samplers/image_sampler.ntsp"
+	}
+}
