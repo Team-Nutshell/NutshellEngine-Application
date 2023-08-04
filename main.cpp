@@ -2,15 +2,7 @@
 
 int main() {
 	NtshEngn::Core core;
-
-	// Initialize
-	core.init();
-
-	// Loop
-	core.update();
-
-	// Destroy
-	core.destroy();
+	core.launch("assets/options/options.ntop");
 
 	return 0;
 }
