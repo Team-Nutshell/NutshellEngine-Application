@@ -24,6 +24,8 @@ output += "\n"
 output += "namespace NtshEngn {\n\n"
 output += "\tnamespace ScriptableFactory {\n\n"
 output += "\t\tScriptable createScriptable(const std::string& scriptName) {\n"
+if (len(scriptNames) == 0):
+	output += "\t\t\tNTSHENGN_UNUSED(scriptName);\n\n"
 output += "\t\t\tScriptable scriptable;\n\n"
 for i, scriptName in enumerate(scriptNames):
 	output += "\t\t\t"
