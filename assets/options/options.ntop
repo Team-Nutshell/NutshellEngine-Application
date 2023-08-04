@@ -1,0 +1,6 @@
+{
+	"windowTitle": "Camera First Person",
+	"windowIconImagePath": "assets/images/image.ntim",
+	"maxFPS": 60,
+	"firstScenePath": "assets/scenes/scene.ntsn"
+}
