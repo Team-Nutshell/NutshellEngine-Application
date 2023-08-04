@@ -2,18 +2,7 @@
 
 int main() {
 	NtshEngn::Core core;
-
-	// Initialize
-	core.init();
-
-	// Scene
-	core.getSceneManager()->goToScene("assets/scenes/scene.ntsn");
-
-	// Loop
-	core.update();
-
-	// Destroy
-	core.destroy();
+	core.launch("assets/options/options.ntop");
 
 	return 0;
 }
