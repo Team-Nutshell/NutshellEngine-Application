@@ -3,7 +3,7 @@
 #include "../Core/Common/utils/ntshengn_utils_math.h"
 #include <cmath>
 
-struct CubeScript : NtshEngn::Script {
+struct CubeScript : public NtshEngn::Script {
 	NTSHENGN_SCRIPT(CubeScript);
 
 	void init() {
