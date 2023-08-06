@@ -31,11 +31,8 @@ struct CameraScript : public NtshEngn::Script {
 			}
 
 			NtshEngn::Transform& transform = ecs->getComponent<NtshEngn::Transform>(entityID);
-			NtshEngn::Math::vec3 cameraPosition = NtshEngn::Math::vec3(transform.position.data());
-			NtshEngn::Math::vec3 cameraRotation = NtshEngn::Math::vec3(transform.rotation.data());
 
-			NtshEngn::Transform otherTransform = ecs->getComponent<NtshEngn::Transform>(m_other);
-			NtshEngn::Math::vec3 otherPosition = NtshEngn::Math::vec3(otherTransform.position.data());
+			const NtshEngn::Transform& otherTransform = ecs->getComponent<NtshEngn::Transform>(m_other);
 
 			if (m_mouseMiddleMode) {
 				const int mouseX = windowModule->getCursorPositionX(windowModule->getMainWindowID());
@@ -60,15 +57,12 @@ struct CameraScript : public NtshEngn::Script {
 			float yawRad = m_yaw * toRad;
 			float pitchRad = m_pitch * toRad;
 
-			cameraPosition.x = std::cos(pitchRad) * std::cos(yawRad);
-			cameraPosition.y = -std::sin(pitchRad);
-			cameraPosition.z = std::cos(pitchRad) * std::sin(yawRad);
-			cameraPosition *= m_distance;
-			cameraPosition += otherPosition;
-			cameraRotation = normalize(otherPosition - cameraPosition);
-
-			transform.position = { cameraPosition.x, cameraPosition.y, cameraPosition.z };
-			transform.rotation = { cameraRotation.x, cameraRotation.y, cameraRotation.z };
+			transform.position.x = std::cos(pitchRad) * std::cos(yawRad);
+			transform.position.y = -std::sin(pitchRad);
+			transform.position.z = std::cos(pitchRad) * std::sin(yawRad);
+			transform.position *= m_distance;
+			transform.position += otherTransform.position;
+			transform.rotation = normalize(otherTransform.position - transform.position);
 		}
 	}
 
