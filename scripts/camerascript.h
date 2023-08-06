@@ -35,7 +35,6 @@ struct CameraScript : public NtshEngn::Script {
 			}
 
 			NtshEngn::Transform& transform = ecs->getComponent<NtshEngn::Transform>(entityID);
-			NtshEngn::Math::vec3 cameraRotation = NtshEngn::Math::vec3(transform.rotation[0], transform.rotation[1], transform.rotation[2]);
 
 			if (m_mouseMiddleMode) {
 				const int mouseX = windowModule->getCursorPositionX(windowModule->getMainWindowID());
@@ -57,40 +56,36 @@ struct CameraScript : public NtshEngn::Script {
 				float yawRad = m_yaw * toRad;
 				float pitchRad = m_pitch * toRad;
 
-				cameraRotation.x = std::cos(pitchRad) * std::cos(yawRad);
-				cameraRotation.y = -std::sin(pitchRad);
-				cameraRotation.z = std::cos(pitchRad) * std::sin(yawRad);
-				cameraRotation = NtshEngn::Math::normalize(cameraRotation);
+				transform.rotation.x = std::cos(pitchRad) * std::cos(yawRad);
+				transform.rotation.y = -std::sin(pitchRad);
+				transform.rotation.z = std::cos(pitchRad) * std::sin(yawRad);
+				transform.rotation = NtshEngn::Math::normalize(transform.rotation);
 			}
 
 			const float cameraSpeed = m_cameraSpeed * static_cast<float>(dt);
 
-			NtshEngn::Math::vec3 cameraPosition = NtshEngn::Math::vec3(transform.position[0], transform.position[1], transform.position[2]);
 			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::W) == NtshEngn::InputState::Held) {
-				cameraPosition += (cameraRotation * cameraSpeed);
+				transform.position += (transform.rotation * cameraSpeed);
 			}
 			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::S) == NtshEngn::InputState::Held) {
-				cameraPosition -= (cameraRotation * cameraSpeed);
+				transform.position -= (transform.rotation * cameraSpeed);
 			}
 			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::A) == NtshEngn::InputState::Held) {
-				NtshEngn::Math::vec3 t = NtshEngn::Math::normalize(NtshEngn::Math::vec3(-cameraRotation.z, 0.0, cameraRotation.x));
-				cameraPosition.x -= (t.x * cameraSpeed);
-				cameraPosition.z -= (t.z * cameraSpeed);
+				NtshEngn::Math::vec3 t = NtshEngn::Math::normalize(NtshEngn::Math::vec3(-transform.rotation.z, 0.0, transform.rotation.x));
+				transform.position.x -= (t.x * cameraSpeed);
+				transform.position.z -= (t.z * cameraSpeed);
 			}
 			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::D) == NtshEngn::InputState::Held) {
-				NtshEngn::Math::vec3 t = NtshEngn::Math::normalize(NtshEngn::Math::vec3(-cameraRotation.z, 0.0, cameraRotation.x));
-				cameraPosition.x += (t.x * cameraSpeed);
-				cameraPosition.z += (t.z * cameraSpeed);
+				NtshEngn::Math::vec3 t = NtshEngn::Math::normalize(NtshEngn::Math::vec3(-transform.rotation.z, 0.0, transform.rotation.x));
+				transform.position.x += (t.x * cameraSpeed);
+				transform.position.z += (t.z * cameraSpeed);
 			}
 			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::Space) == NtshEngn::InputState::Held) {
-				cameraPosition.y += cameraSpeed;
+				transform.position.y += cameraSpeed;
 			}
 			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::Shift) == NtshEngn::InputState::Held) {
-				cameraPosition.y -= cameraSpeed;
+				transform.position.y -= cameraSpeed;
 			}
-
-			transform.position = { cameraPosition.x, cameraPosition.y, cameraPosition.z };
-			transform.rotation = { cameraRotation.x, cameraRotation.y, cameraRotation.z };
 		}
 	}
 
