@@ -1,4 +1,4 @@
-#include "Core/src/ntshengn_core.h"
+#include "Core/ntshengn_core.h"
 
 int main() {
 	NtshEngn::Core core;
