@@ -17,7 +17,7 @@
 			"camera": {
 				"fov": 45.0,
 				"nearPlane": 0.03,
-				"farPlane:": 100.0
+				"farPlane": 100.0
 			},
 			"scriptable": {
 				"scriptName": "CameraScript"
