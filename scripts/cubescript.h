@@ -11,7 +11,7 @@ struct CubeScript : public NtshEngn::Script {
 	}
 
 	void update(double dt) {
-		if (windowModule && windowModule->isOpen(windowModule->getMainWindowID())) {
+		if (windowModule && windowModule->isWindowOpen(windowModule->getMainWindowID())) {
 			NtshEngn::Transform& transform = ecs->getComponent<NtshEngn::Transform>(entityID);
 			NtshEngn::Transform& cameraTransform = ecs->getComponent<NtshEngn::Transform>(m_camera);
 			const float cubeSpeed = m_cubeSpeed * static_cast<float>(dt);
