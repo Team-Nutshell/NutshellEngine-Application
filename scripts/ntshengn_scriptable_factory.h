@@ -4,7 +4,7 @@
 #include "../Core/Common/ecs/components/ntshengn_ecs_scriptable.h"
 #include <string>
 
-#include "camerascript.h"
+#include "gamepadtestscript.h"
 
 namespace NtshEngn {
 
@@ -13,7 +13,7 @@ namespace NtshEngn {
 		Scriptable createScriptable(const std::string& scriptName) {
 			Scriptable scriptable;
 
-			if (scriptName == "CameraScript") { scriptable.script = std::make_unique<CameraScript>(); }
+			if (scriptName == "GamepadTestScript") { scriptable.script = std::make_unique<GamepadTestScript>(); }
 
 			return scriptable;
 		}

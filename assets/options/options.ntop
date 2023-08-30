@@ -1,6 +1,5 @@
 {
-	"windowTitle": "Camera First Person",
-	"windowIconImagePath": "assets/images/image.ntim",
+	"windowTitle": "Gamepad Test",
 	"maxFPS": 60,
 	"firstScenePath": "assets/scenes/scene.ntsn"
 }

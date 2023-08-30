@@ -1,63 +1,9 @@
 {
 	"entities": [
 		{
-			"name": "Camera",
-			"transform": {
-				"position": [
-					0.0,
-					2.0,
-					5.0
-				],
-				"rotation": [
-					0.0,
-					0.0,
-					-1.0
-				]
-			},
-			"camera": {
-				"fov": 45.0,
-				"nearPlane": 0.03,
-				"farPlane": 100.0
-			},
+			"name": "GamepadTest",
 			"scriptable": {
-				"scriptName": "CameraScript"
-			}
-		},
-		{
-			"name": "Cube",
-			"renderable": {
-				"modelPath": "assets/models/model.ntmd"
-			},
-			"collidable": {
-				"type": "AABB",
-				"min": [
-					-1.0,
-					-1.0,
-					-1.0
-				],
-				"max": [
-					1.0,
-					1.0,
-					1.0
-				]
-			}
-		},
-		{
-			"name": "Light",
-			"transform": {
-				"rotation": [
-					1.0,
-					-1.0,
-					0.0
-				]
-			},
-			"light": {
-				"type": "Directional",
-				"color": [
-					1.0,
-					1.0,
-					1.0
-				]
+				"scriptName": "GamepadTestScript"
 			}
 		}
 	]
