@@ -8,11 +8,11 @@ struct CameraScript : public NtshEngn::Script {
 	NTSHENGN_SCRIPT(CameraScript);
 
 	void init() {
-		if (windowModule && windowModule->isOpen(windowModule->getMainWindowID())) {
+		if (windowModule && windowModule->isWindowOpen(windowModule->getMainWindowID())) {
 			windowModule->setCursorVisibility(windowModule->getMainWindowID(), !m_mouseMiddleMode);
 
-			m_prevMouseX = windowModule->getWidth(windowModule->getMainWindowID()) / 2;
-			m_prevMouseY = windowModule->getHeight(windowModule->getMainWindowID()) / 2;
+			m_prevMouseX = windowModule->getWindowWidth(windowModule->getMainWindowID()) / 2;
+			m_prevMouseY = windowModule->getWindowHeight(windowModule->getMainWindowID()) / 2;
 			windowModule->setCursorPosition(windowModule->getMainWindowID(), m_prevMouseX, m_prevMouseY);
 
 			const NtshEngn::Transform transform = ecs->getComponent<NtshEngn::Transform>(entityID);
@@ -24,13 +24,13 @@ struct CameraScript : public NtshEngn::Script {
 	}
 
 	void update(double dt) {
-		if (windowModule && windowModule->isOpen(windowModule->getMainWindowID())) {
+		if (windowModule && windowModule->isWindowOpen(windowModule->getMainWindowID())) {
 			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::R) == NtshEngn::InputState::Pressed) {
 				m_mouseMiddleMode = !m_mouseMiddleMode;
 				windowModule->setCursorVisibility(windowModule->getMainWindowID(), !m_mouseMiddleMode);
 				if (m_mouseMiddleMode) {
-					m_prevMouseX = windowModule->getWidth(windowModule->getMainWindowID()) / 2;
-					m_prevMouseY = windowModule->getHeight(windowModule->getMainWindowID()) / 2;
+					m_prevMouseX = windowModule->getWindowWidth(windowModule->getMainWindowID()) / 2;
+					m_prevMouseY = windowModule->getWindowHeight(windowModule->getMainWindowID()) / 2;
 					windowModule->setCursorPosition(windowModule->getMainWindowID(), m_prevMouseX, m_prevMouseY);
 				}
 			}
@@ -41,8 +41,8 @@ struct CameraScript : public NtshEngn::Script {
 				const int mouseX = windowModule->getCursorPositionX(windowModule->getMainWindowID());
 				const int mouseY = windowModule->getCursorPositionY(windowModule->getMainWindowID());
 
-				m_prevMouseX = windowModule->getWidth(windowModule->getMainWindowID()) / 2;
-				m_prevMouseY = windowModule->getHeight(windowModule->getMainWindowID()) / 2;
+				m_prevMouseX = windowModule->getWindowWidth(windowModule->getMainWindowID()) / 2;
+				m_prevMouseY = windowModule->getWindowHeight(windowModule->getMainWindowID()) / 2;
 				windowModule->setCursorPosition(windowModule->getMainWindowID(), m_prevMouseX, m_prevMouseY);
 
 				const float xOffset = (mouseX - m_prevMouseX) * m_mouseSensitivity;
