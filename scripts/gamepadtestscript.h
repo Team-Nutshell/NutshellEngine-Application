@@ -21,11 +21,9 @@ struct GamepadTestScript : public Script {
 
 			m_startSelectImage = graphicsModule->load(*assetManager->loadImage("assets/images/start_select.png"));
 
-			m_leftBumperImage = graphicsModule->load(*assetManager->loadImage("assets/images/left_bumper.png"));
-			m_rightBumperImage = graphicsModule->load(*assetManager->loadImage("assets/images/right_bumper.png"));
+			m_bumperImage = graphicsModule->load(*assetManager->loadImage("assets/images/bumper.png"));
 
-			m_leftTriggerImage = graphicsModule->load(*assetManager->loadImage("assets/images/left_trigger.png"));
-			m_rightTriggerImage = graphicsModule->load(*assetManager->loadImage("assets/images/right_trigger.png"));
+			m_triggerImage = graphicsModule->load(*assetManager->loadImage("assets/images/trigger.png"));
 
 			m_dPadImage = graphicsModule->load(*assetManager->loadImage("assets/images/dpad.png"));
 
@@ -56,12 +54,12 @@ struct GamepadTestScript : public Script {
 				graphicsModule->drawUIImage(m_startSelectImage, ImageSamplerFilter::Nearest, Math::vec2(602.0f, 304.0f), 0.0f, Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::Select)));
 
 				// Bumpers
-				graphicsModule->drawUIImage(m_leftBumperImage, ImageSamplerFilter::Nearest, Math::vec2(498.0f, 212.0f), 0.0f, Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::LeftBumper)));
-				graphicsModule->drawUIImage(m_rightBumperImage, ImageSamplerFilter::Nearest, Math::vec2(782.0f, 212.0f), 0.0f, Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::RightBumper)));
+				graphicsModule->drawUIImage(m_bumperImage, ImageSamplerFilter::Nearest, Math::vec2(498.0f, 212.0f), 0.0f, Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::LeftBumper)));
+				graphicsModule->drawUIImage(m_bumperImage, ImageSamplerFilter::Nearest, Math::vec2(782.0f, 212.0f), 0.0f, Math::vec2(-2.0f, 2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::RightBumper)));
 
 				// Triggers
-				graphicsModule->drawUIImage(m_leftTriggerImage, ImageSamplerFilter::Nearest, Math::vec2(499.0f, 162.0f), 0.0f, Math::vec2(2.0f), Math::vec4(1.0f, 0.0f, 0.0f, windowModule->getGamepadLeftTrigger(gamepads[0])));
-				graphicsModule->drawUIImage(m_rightTriggerImage, ImageSamplerFilter::Nearest, Math::vec2(781.0f, 162.0f), 0.0f, Math::vec2(2.0f), Math::vec4(1.0f, 0.0f, 0.0f, windowModule->getGamepadRightTrigger(gamepads[0])));
+				graphicsModule->drawUIImage(m_triggerImage, ImageSamplerFilter::Nearest, Math::vec2(499.0f, 162.0f), 0.0f, Math::vec2(2.0f), Math::vec4(1.0f, 0.0f, 0.0f, windowModule->getGamepadLeftTrigger(gamepads[0])));
+				graphicsModule->drawUIImage(m_triggerImage, ImageSamplerFilter::Nearest, Math::vec2(781.0f, 162.0f), 0.0f, Math::vec2(-2.0f, 2.0f), Math::vec4(1.0f, 0.0f, 0.0f, windowModule->getGamepadRightTrigger(gamepads[0])));
 
 				// D-Pad
 				graphicsModule->drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(561.0f, 376.0f), 0.0f, Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::DPadUp)));
@@ -117,11 +115,9 @@ private:
 
 	ImageID m_startSelectImage;
 
-	ImageID m_leftBumperImage;
-	ImageID m_rightBumperImage;
+	ImageID m_bumperImage;
 
-	ImageID m_leftTriggerImage;
-	ImageID m_rightTriggerImage;
+	ImageID m_triggerImage;
 
 	ImageID m_dPadImage;
 
