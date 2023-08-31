@@ -1,5 +1,6 @@
 {
 	"windowTitle": "Gamepad Test",
+	"windowIconImagePath": "assets/images/controller.png",
 	"maxFPS": 60,
 	"firstScenePath": "assets/scenes/scene.ntsn"
 }
