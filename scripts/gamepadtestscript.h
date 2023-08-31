@@ -62,10 +62,10 @@ struct GamepadTestScript : public Script {
 				graphicsModule->drawUIImage(m_triggerImage, ImageSamplerFilter::Nearest, Math::vec2(781.0f, 162.0f), 0.0f, Math::vec2(-2.0f, 2.0f), Math::vec4(1.0f, 0.0f, 0.0f, windowModule->getGamepadRightTrigger(gamepads[0])));
 
 				// D-Pad
-				graphicsModule->drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(561.0f, 376.0f), 0.0f, Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::DPadUp)));
+				graphicsModule->drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(561.0f, 375.0f), 0.0f, Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::DPadUp)));
 				graphicsModule->drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(583.0f, 397.0f), Math::toRad(90.0f), Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::DPadRight)));
-				graphicsModule->drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(561.0f, 418.0f), Math::toRad(180.0f), Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::DPadDown)));
-				graphicsModule->drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(540.0f, 397.0f), Math::toRad(270.0f), Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::DPadLeft)));
+				graphicsModule->drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(561.0f, 419.0f), Math::toRad(180.0f), Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::DPadDown)));
+				graphicsModule->drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(539.0f, 397.0f), Math::toRad(270.0f), Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::DPadLeft)));
 
 				// Sticks
 				graphicsModule->drawUIImage(m_stickImage, ImageSamplerFilter::Nearest, Math::vec2(487.0f + (20.0f * windowModule->getGamepadStickAxisX(gamepads[0], InputGamepadStick::Left)), 305.0f + (20.0f * windowModule->getGamepadStickAxisY(gamepads[0], InputGamepadStick::Left))), 0.0f, Math::vec2(2.0f), getColorByStateStick(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::LeftStick)));
