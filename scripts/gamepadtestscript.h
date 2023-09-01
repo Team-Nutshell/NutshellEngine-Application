@@ -35,13 +35,13 @@ struct GamepadTestScript : public ScriptingAPI {
 		std::vector<GamepadID> gamepads = getConnectedGamepads();
 
 		for (uint8_t i = 0; i < 4; i++) {
-			if (drawUIButton(Math::vec2(50.0f + (75.0f * static_cast<float>(i)), 650.0f), Math::vec2(50.0f, 50.0f), Math::vec4(0.25f, 0.25f, 0.25f, 1.0f), InputMouseButton::One)) {
+			if (drawUIButton(Math::vec2(20.0f + (75.0f * static_cast<float>(i)), 650.0f), Math::vec2(50.0f, 50.0f), Math::vec4(0.25f, 0.25f, 0.25f, 1.0f), InputMouseButton::One)) {
 				m_activeGamepad = static_cast<size_t>(i);
 			}
-			drawUIText(m_font, std::to_string(i), Math::vec2(67.0f + (75.0f * static_cast<float>(i)), 685.0f), Math::vec4((gamepads.size() > static_cast<size_t>(i)) ? Math::vec2(0.0f, 1.0f) : Math::vec2(1.0, 0.0f), 0.0f, 1.0f));
+			drawUIText(m_font, std::to_string(i), Math::vec2(37.0f + (75.0f * static_cast<float>(i)), 685.0f), Math::vec4((gamepads.size() > static_cast<size_t>(i)) ? Math::vec2(0.0f, 1.0f) : Math::vec2(1.0, 0.0f), 0.0f, 1.0f));
 		}
 
-		drawUIText(m_font, "[" + std::to_string(m_activeGamepad) + "] " + ((gamepads.size() <= m_activeGamepad) ? "No gamepad is detected." : getGamepadName(gamepads[m_activeGamepad])), Math::vec2(30.0f, 30.0f), Math::vec4(1.0f));
+		drawUIText(m_font, "[" + std::to_string(m_activeGamepad) + "] " + ((gamepads.size() <= m_activeGamepad) ? "No gamepad is detected." : getGamepadName(gamepads[m_activeGamepad])), Math::vec2(5.0f, 30.0f), Math::vec4(1.0f));
 		if (gamepads.size() > m_activeGamepad) {
 			// Face buttons
 			drawUIImage(m_buttonImage, ImageSamplerFilter::Nearest, Math::vec2(791.0f, 343.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::Face1)));
