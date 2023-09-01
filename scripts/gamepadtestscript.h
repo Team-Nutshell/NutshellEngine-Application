@@ -33,39 +33,46 @@ struct GamepadTestScript : public ScriptingAPI {
 		drawUIImage(m_controllerImage, ImageSamplerFilter::Nearest, windowSize / 2.0f, 0.0f, Math::vec2(2.0f), Math::vec4(1.0f));
 
 		std::vector<GamepadID> gamepads = getConnectedGamepads();
-		drawUIText(m_font, gamepads.empty() ? "No gamepad is detected." : getGamepadName(gamepads[0]), Math::vec2(30.0f, 30.0f), Math::vec4(1.0f));
 
-		if (!gamepads.empty()) {
+		for (uint8_t i = 0; i < 4; i++) {
+			if (drawUIButton(Math::vec2(50.0f + (75.0f * static_cast<float>(i)), 650.0f), Math::vec2(50.0f, 50.0f), Math::vec4(0.25f, 0.25f, 0.25f, 1.0f), InputMouseButton::One)) {
+				m_activeGamepad = static_cast<size_t>(i);
+			}
+			drawUIText(m_font, std::to_string(i), Math::vec2(67.0f + (75.0f * static_cast<float>(i)), 685.0f), Math::vec4((gamepads.size() > static_cast<size_t>(i)) ? Math::vec2(0.0f, 1.0f) : Math::vec2(1.0, 0.0f), 0.0f, 1.0f));
+		}
+
+		drawUIText(m_font, "[" + std::to_string(m_activeGamepad) + "] " + ((gamepads.size() <= m_activeGamepad) ? "No gamepad is detected." : getGamepadName(gamepads[m_activeGamepad])), Math::vec2(30.0f, 30.0f), Math::vec4(1.0f));
+		if (gamepads.size() > m_activeGamepad) {
 			// Face buttons
-			drawUIImage(m_buttonImage, ImageSamplerFilter::Nearest, Math::vec2(791.0f, 343.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[0], InputGamepadButton::Face1)));
-			drawUIImage(m_buttonImage, ImageSamplerFilter::Nearest, Math::vec2(829.0f, 305.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[0], InputGamepadButton::Face2)));
-			drawUIImage(m_buttonImage, ImageSamplerFilter::Nearest, Math::vec2(753.0f, 305.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[0], InputGamepadButton::Face3)));
-			drawUIImage(m_buttonImage, ImageSamplerFilter::Nearest, Math::vec2(791.0f, 265.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[0], InputGamepadButton::Face4)));
+			drawUIImage(m_buttonImage, ImageSamplerFilter::Nearest, Math::vec2(791.0f, 343.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::Face1)));
+			drawUIImage(m_buttonImage, ImageSamplerFilter::Nearest, Math::vec2(829.0f, 305.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::Face2)));
+			drawUIImage(m_buttonImage, ImageSamplerFilter::Nearest, Math::vec2(753.0f, 305.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::Face3)));
+			drawUIImage(m_buttonImage, ImageSamplerFilter::Nearest, Math::vec2(791.0f, 265.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::Face4)));
 
 			// Guide button
-			drawUIImage(m_buttonImage, ImageSamplerFilter::Nearest, Math::vec2(643.0f, 241.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[0], InputGamepadButton::Guide)));
+			drawUIImage(m_buttonImage, ImageSamplerFilter::Nearest, Math::vec2(643.0f, 241.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::Guide)));
 
 			// Start and select buttons
-			drawUIImage(m_startSelectImage, ImageSamplerFilter::Nearest, Math::vec2(684.0f, 304.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[0], InputGamepadButton::Start)));
-			drawUIImage(m_startSelectImage, ImageSamplerFilter::Nearest, Math::vec2(602.0f, 304.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[0], InputGamepadButton::Select)));
+			drawUIImage(m_startSelectImage, ImageSamplerFilter::Nearest, Math::vec2(684.0f, 304.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::Start)));
+			drawUIImage(m_startSelectImage, ImageSamplerFilter::Nearest, Math::vec2(602.0f, 304.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::Select)));
 
 			// Bumpers
-			drawUIImage(m_bumperImage, ImageSamplerFilter::Nearest, Math::vec2(498.0f, 212.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[0], InputGamepadButton::LeftBumper)));
-			drawUIImage(m_bumperImage, ImageSamplerFilter::Nearest, Math::vec2(782.0f, 212.0f), 0.0f, Math::vec2(-2.0f, 2.0f), getColorByState(getGamepadButtonState(gamepads[0], InputGamepadButton::RightBumper)));
+			drawUIImage(m_bumperImage, ImageSamplerFilter::Nearest, Math::vec2(498.0f, 212.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::LeftBumper)));
+			drawUIImage(m_bumperImage, ImageSamplerFilter::Nearest, Math::vec2(782.0f, 212.0f), 0.0f, Math::vec2(-2.0f, 2.0f), getColorByState(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::RightBumper)));
 
 			// Triggers
-			drawUIImage(m_triggerImage, ImageSamplerFilter::Nearest, Math::vec2(499.0f, 162.0f), 0.0f, Math::vec2(2.0f), Math::vec4(1.0f, 0.0f, 0.0f, getGamepadLeftTrigger(gamepads[0])));
-			drawUIImage(m_triggerImage, ImageSamplerFilter::Nearest, Math::vec2(781.0f, 162.0f), 0.0f, Math::vec2(-2.0f, 2.0f), Math::vec4(1.0f, 0.0f, 0.0f, getGamepadRightTrigger(gamepads[0])));
+			drawUIImage(m_triggerImage, ImageSamplerFilter::Nearest, Math::vec2(499.0f, 162.0f), 0.0f, Math::vec2(2.0f), Math::vec4(1.0f, 0.0f, 0.0f, getGamepadLeftTrigger(gamepads[m_activeGamepad])));
+			drawUIImage(m_triggerImage, ImageSamplerFilter::Nearest, Math::vec2(781.0f, 162.0f), 0.0f, Math::vec2(-2.0f, 2.0f), Math::vec4(1.0f, 0.0f, 0.0f, getGamepadRightTrigger(gamepads[m_activeGamepad])));
 
 			// D-Pad
-			drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(561.0f, 375.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[0], InputGamepadButton::DPadUp)));
-			drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(583.0f, 397.0f), Math::toRad(90.0f), Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[0], InputGamepadButton::DPadRight)));
-			drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(561.0f, 419.0f), Math::toRad(180.0f), Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[0], InputGamepadButton::DPadDown)));
-			drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(539.0f, 397.0f), Math::toRad(270.0f), Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[0], InputGamepadButton::DPadLeft)));
+			drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(561.0f, 375.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::DPadUp)));
+			drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(583.0f, 397.0f), Math::toRad(90.0f), Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::DPadRight)));
+			drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(561.0f, 419.0f), Math::toRad(180.0f), Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::DPadDown)));
+			drawUIImage(m_dPadImage, ImageSamplerFilter::Nearest, Math::vec2(539.0f, 397.0f), Math::toRad(270.0f), Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::DPadLeft)));
 
 			// Sticks
-			drawUIImage(m_stickImage, ImageSamplerFilter::Nearest, Math::vec2(487.0f + (20.0f * getGamepadStickAxisX(gamepads[0], InputGamepadStick::Left)), 305.0f + (20.0f * getGamepadStickAxisY(gamepads[0], InputGamepadStick::Left))), 0.0f, Math::vec2(2.0f), getColorByStateStick(getGamepadButtonState(gamepads[0], InputGamepadButton::LeftStick)));
-			drawUIImage(m_stickImage, ImageSamplerFilter::Nearest, Math::vec2(717.0f + (20.0f * getGamepadStickAxisX(gamepads[0], InputGamepadStick::Right)), 391.0f + (20.0f * getGamepadStickAxisY(gamepads[0], InputGamepadStick::Right))), 0.0f, Math::vec2(2.0f), getColorByStateStick(getGamepadButtonState(gamepads[0], InputGamepadButton::RightStick)));
+			drawUIImage(m_stickImage, ImageSamplerFilter::Nearest, Math::vec2(487.0f + (20.0f * getGamepadStickAxisX(gamepads[m_activeGamepad], InputGamepadStick::Left)), 305.0f + (20.0f * getGamepadStickAxisY(gamepads[m_activeGamepad], InputGamepadStick::Left))), 0.0f, Math::vec2(2.0f), getColorByStateStick(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::LeftStick)));
+			drawUIImage(m_stickImage, ImageSamplerFilter::Nearest, Math::vec2(717.0f + (20.0f * getGamepadStickAxisX(gamepads[m_activeGamepad], InputGamepadStick::Right)), 391.0f + (20.0f * getGamepadStickAxisY(gamepads[m_activeGamepad], InputGamepadStick::Right))), 0.0f, Math::vec2(2.0f), getColorByStateStick(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::RightStick)));
 		}
 	}
 
@@ -102,6 +109,8 @@ private:
 	}
 
 private:
+	size_t m_activeGamepad = 0;
+
 	FontID m_font;
 
 	ImageID m_controllerImage;
