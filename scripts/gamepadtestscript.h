@@ -49,6 +49,9 @@ struct GamepadTestScript : public Script {
 				graphicsModule->drawUIImage(m_buttonImage, ImageSamplerFilter::Nearest, Math::vec2(753.0f, 305.0f), 0.0f, Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::Face3)));
 				graphicsModule->drawUIImage(m_buttonImage, ImageSamplerFilter::Nearest, Math::vec2(791.0f, 265.0f), 0.0f, Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::Face4)));
 
+				// Guide button
+				graphicsModule->drawUIImage(m_buttonImage, ImageSamplerFilter::Nearest, Math::vec2(643.0f, 241.0f), 0.0f, Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::Guide)));
+
 				// Start and select buttons
 				graphicsModule->drawUIImage(m_startSelectImage, ImageSamplerFilter::Nearest, Math::vec2(684.0f, 304.0f), 0.0f, Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::Start)));
 				graphicsModule->drawUIImage(m_startSelectImage, ImageSamplerFilter::Nearest, Math::vec2(602.0f, 304.0f), 0.0f, Math::vec2(2.0f), getColorByState(windowModule->getGamepadButtonState(gamepads[0], InputGamepadButton::Select)));
