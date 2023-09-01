@@ -1,92 +1,87 @@
 #pragma once
-#include "../Core/Common/resources/ntshengn_resources_scripting.h"
-#include "../Core/Common/module_interfaces/ntshengn_window_module_interface.h"
-#include "../Core/Common/utils/ntshengn_utils_math.h"
+#include "../Core/scripting/ntshengn_scripting_api.h"
 #include <cmath>
 
-struct CameraScript : public NtshEngn::Script {
+using namespace NtshEngn;
+struct CameraScript : public ScriptingAPI {
 	NTSHENGN_SCRIPT(CameraScript);
 
 	void init() {
-		if (windowModule && windowModule->isWindowOpen(windowModule->getMainWindowID())) {
-			windowModule->setCursorVisibility(windowModule->getMainWindowID(), !m_mouseMiddleMode);
+		setCursorVisibility(!m_mouseMiddleMode);
 
-			m_prevMouseX = windowModule->getWindowWidth(windowModule->getMainWindowID()) / 2;
-			m_prevMouseY = windowModule->getWindowHeight(windowModule->getMainWindowID()) / 2;
-			windowModule->setCursorPosition(windowModule->getMainWindowID(), m_prevMouseX, m_prevMouseY);
+		m_prevMouseX = getWindowWidth() / 2;
+		m_prevMouseY = getWindowHeight() / 2;
+		setCursorPosition(m_prevMouseX, m_prevMouseY);
 
-			const NtshEngn::Transform transform = ecs->getComponent<NtshEngn::Transform>(entityID);
-			NtshEngn::Math::vec3 cameraRotation = NtshEngn::Math::normalize(NtshEngn::Math::vec3(transform.rotation[0], transform.rotation[1], transform.rotation[2]));
+		const Transform transform = getEntityComponent<Transform>(entityID);
+		Math::vec3 cameraRotation = Math::normalize(Math::vec3(transform.rotation[0], transform.rotation[1], transform.rotation[2]));
 
-			m_yaw = std::atan2(cameraRotation.z, cameraRotation.x) * toDeg;
-			m_pitch = -std::asin(cameraRotation.y) * toDeg;
-		}
+		m_yaw = Math::toDeg(std::atan2(cameraRotation.z, cameraRotation.x));
+		m_pitch = Math::toDeg(-std::asin(cameraRotation.y));
 	}
 
 	void update(double dt) {
-		if (windowModule && windowModule->isWindowOpen(windowModule->getMainWindowID())) {
-			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::R) == NtshEngn::InputState::Pressed) {
-				m_mouseMiddleMode = !m_mouseMiddleMode;
-				windowModule->setCursorVisibility(windowModule->getMainWindowID(), !m_mouseMiddleMode);
-				if (m_mouseMiddleMode) {
-					m_prevMouseX = windowModule->getWindowWidth(windowModule->getMainWindowID()) / 2;
-					m_prevMouseY = windowModule->getWindowHeight(windowModule->getMainWindowID()) / 2;
-					windowModule->setCursorPosition(windowModule->getMainWindowID(), m_prevMouseX, m_prevMouseY);
-				}
-			}
-
-			NtshEngn::Transform& transform = ecs->getComponent<NtshEngn::Transform>(entityID);
-
+		if (getKeyState(InputKeyboardKey::R) == InputState::Pressed) {
+			m_mouseMiddleMode = !m_mouseMiddleMode;
+			setCursorVisibility(!m_mouseMiddleMode);
 			if (m_mouseMiddleMode) {
-				const int mouseX = windowModule->getCursorPositionX(windowModule->getMainWindowID());
-				const int mouseY = windowModule->getCursorPositionY(windowModule->getMainWindowID());
-
-				m_prevMouseX = windowModule->getWindowWidth(windowModule->getMainWindowID()) / 2;
-				m_prevMouseY = windowModule->getWindowHeight(windowModule->getMainWindowID()) / 2;
-				windowModule->setCursorPosition(windowModule->getMainWindowID(), m_prevMouseX, m_prevMouseY);
-
-				const float xOffset = (mouseX - m_prevMouseX) * m_mouseSensitivity;
-				const float yOffset = (mouseY - m_prevMouseY) * m_mouseSensitivity;
-
-				m_prevMouseX = mouseX;
-				m_prevMouseY = mouseY;
-
-				m_yaw = std::fmod(m_yaw + xOffset, 360.0f);
-				m_pitch = std::max(-89.0f, std::min(89.0f, m_pitch + yOffset));
-
-				float yawRad = m_yaw * toRad;
-				float pitchRad = m_pitch * toRad;
-
-				transform.rotation.x = std::cos(pitchRad) * std::cos(yawRad);
-				transform.rotation.y = -std::sin(pitchRad);
-				transform.rotation.z = std::cos(pitchRad) * std::sin(yawRad);
-				transform.rotation = NtshEngn::Math::normalize(transform.rotation);
+				m_prevMouseX = getWindowWidth() / 2;
+				m_prevMouseY = getWindowHeight() / 2;
+				setCursorPosition(m_prevMouseX, m_prevMouseY);
 			}
+		}
 
-			const float cameraSpeed = m_cameraSpeed * static_cast<float>(dt);
+		Transform& transform = getEntityComponent<Transform>(entityID);
 
-			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::W) == NtshEngn::InputState::Held) {
-				transform.position += (transform.rotation * cameraSpeed);
-			}
-			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::S) == NtshEngn::InputState::Held) {
-				transform.position -= (transform.rotation * cameraSpeed);
-			}
-			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::A) == NtshEngn::InputState::Held) {
-				NtshEngn::Math::vec3 t = NtshEngn::Math::normalize(NtshEngn::Math::vec3(-transform.rotation.z, 0.0, transform.rotation.x));
-				transform.position.x -= (t.x * cameraSpeed);
-				transform.position.z -= (t.z * cameraSpeed);
-			}
-			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::D) == NtshEngn::InputState::Held) {
-				NtshEngn::Math::vec3 t = NtshEngn::Math::normalize(NtshEngn::Math::vec3(-transform.rotation.z, 0.0, transform.rotation.x));
-				transform.position.x += (t.x * cameraSpeed);
-				transform.position.z += (t.z * cameraSpeed);
-			}
-			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::Space) == NtshEngn::InputState::Held) {
-				transform.position.y += cameraSpeed;
-			}
-			if (windowModule->getKeyState(windowModule->getMainWindowID(), NtshEngn::InputKeyboardKey::Shift) == NtshEngn::InputState::Held) {
-				transform.position.y -= cameraSpeed;
-			}
+		if (m_mouseMiddleMode) {
+			const int mouseX = getCursorPositionX();
+			const int mouseY = getCursorPositionY();
+
+			m_prevMouseX = getWindowWidth() / 2;
+			m_prevMouseY = getWindowHeight() / 2;
+			setCursorPosition(m_prevMouseX, m_prevMouseY);
+
+			const float xOffset = (mouseX - m_prevMouseX) * m_mouseSensitivity;
+			const float yOffset = (mouseY - m_prevMouseY) * m_mouseSensitivity;
+
+			m_prevMouseX = mouseX;
+			m_prevMouseY = mouseY;
+
+			m_yaw = std::fmod(m_yaw + xOffset, 360.0f);
+			m_pitch = std::max(-89.0f, std::min(89.0f, m_pitch + yOffset));
+
+			float yawRad = Math::toRad(m_yaw);
+			float pitchRad = Math::toRad(m_pitch);
+
+			transform.rotation.x = std::cos(pitchRad) * std::cos(yawRad);
+			transform.rotation.y = -std::sin(pitchRad);
+			transform.rotation.z = std::cos(pitchRad) * std::sin(yawRad);
+			transform.rotation = Math::normalize(transform.rotation);
+		}
+
+		const float cameraSpeed = m_cameraSpeed * static_cast<float>(dt);
+
+		if (getKeyState(InputKeyboardKey::W) == InputState::Held) {
+			transform.position += (transform.rotation * cameraSpeed);
+		}
+		if (getKeyState(InputKeyboardKey::S) == InputState::Held) {
+			transform.position -= (transform.rotation * cameraSpeed);
+		}
+		if (getKeyState(InputKeyboardKey::A) == InputState::Held) {
+			Math::vec3 t = Math::normalize(Math::vec3(-transform.rotation.z, 0.0, transform.rotation.x));
+			transform.position.x -= (t.x * cameraSpeed);
+			transform.position.z -= (t.z * cameraSpeed);
+		}
+		if (getKeyState(InputKeyboardKey::D) == InputState::Held) {
+			Math::vec3 t = Math::normalize(Math::vec3(-transform.rotation.z, 0.0, transform.rotation.x));
+			transform.position.x += (t.x * cameraSpeed);
+			transform.position.z += (t.z * cameraSpeed);
+		}
+		if (getKeyState(InputKeyboardKey::Space) == InputState::Held) {
+			transform.position.y += cameraSpeed;
+		}
+		if (getKeyState(InputKeyboardKey::Shift) == InputState::Held) {
+			transform.position.y -= cameraSpeed;
 		}
 	}
 
@@ -94,9 +89,6 @@ struct CameraScript : public NtshEngn::Script {
 	}
 
 private:
-	const float toRad = 3.1415926535897932384626433832795f / 180.0f;
-	const float toDeg = 180.0f / 3.1415926535897932384626433832795f;
-
 	bool m_mouseMiddleMode = false;
 
 	const float m_cameraSpeed = 0.0015f;
