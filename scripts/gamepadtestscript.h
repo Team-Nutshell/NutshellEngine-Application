@@ -35,7 +35,11 @@ struct GamepadTestScript : public ScriptingAPI {
 		std::vector<GamepadID> gamepads = getConnectedGamepads();
 
 		for (uint8_t i = 0; i < 4; i++) {
-			if (drawUIButton(Math::vec2(20.0f + (75.0f * static_cast<float>(i)), 650.0f), Math::vec2(50.0f, 50.0f), Math::vec4(0.1f, 0.1f, 0.1f, 1.0f), InputMouseButton::One)) {
+			UIElementState buttonState = drawUIButton(Math::vec2(20.0f + (75.0f * static_cast<float>(i)), 650.0f), Math::vec2(50.0f, 50.0f), Math::vec4(0.1f, 0.1f, 0.1f, 1.0f), InputMouseButton::One);
+			if (buttonState == UIElementState::Hovered) {
+				drawUIRectangle(Math::vec2(20.0f + (75.0f * static_cast<float>(i)), 650.0f), Math::vec2(50.0f, 50.0f), Math::vec4(0.25f, 0.25f, 0.25f, 1.0f));
+			}
+			else if (buttonState == UIElementState::Pressed) {
 				m_activeGamepad = static_cast<size_t>(i);
 			}
 			drawUIText(m_font, std::to_string(i), Math::vec2(37.0f + (75.0f * static_cast<float>(i)), 685.0f), Math::vec4((gamepads.size() > static_cast<size_t>(i)) ? Math::vec2(0.0f, 1.0f) : Math::vec2(1.0, 0.0f), 0.0f, 1.0f));
