@@ -35,7 +35,7 @@ struct GamepadTestScript : public ScriptingAPI {
 		std::vector<GamepadID> gamepads = getConnectedGamepads();
 
 		for (uint8_t i = 0; i < 4; i++) {
-			if (drawUIButton(Math::vec2(20.0f + (75.0f * static_cast<float>(i)), 650.0f), Math::vec2(50.0f, 50.0f), Math::vec4(0.25f, 0.25f, 0.25f, 1.0f), InputMouseButton::One)) {
+			if (drawUIButton(Math::vec2(20.0f + (75.0f * static_cast<float>(i)), 650.0f), Math::vec2(50.0f, 50.0f), Math::vec4(0.1f, 0.1f, 0.1f, 1.0f), InputMouseButton::One)) {
 				m_activeGamepad = static_cast<size_t>(i);
 			}
 			drawUIText(m_font, std::to_string(i), Math::vec2(37.0f + (75.0f * static_cast<float>(i)), 685.0f), Math::vec4((gamepads.size() > static_cast<size_t>(i)) ? Math::vec2(0.0f, 1.0f) : Math::vec2(1.0, 0.0f), 0.0f, 1.0f));
@@ -73,6 +73,12 @@ struct GamepadTestScript : public ScriptingAPI {
 			// Sticks
 			drawUIImage(m_stickImage, ImageSamplerFilter::Nearest, Math::vec2(487.0f + (20.0f * getGamepadStickAxisX(gamepads[m_activeGamepad], InputGamepadStick::Left)), 305.0f + (20.0f * getGamepadStickAxisY(gamepads[m_activeGamepad], InputGamepadStick::Left))), 0.0f, Math::vec2(2.0f), getColorByStateStick(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::LeftStick)));
 			drawUIImage(m_stickImage, ImageSamplerFilter::Nearest, Math::vec2(717.0f + (20.0f * getGamepadStickAxisX(gamepads[m_activeGamepad], InputGamepadStick::Right)), 391.0f + (20.0f * getGamepadStickAxisY(gamepads[m_activeGamepad], InputGamepadStick::Right))), 0.0f, Math::vec2(2.0f), getColorByStateStick(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::RightStick)));
+
+			// Values
+			drawUIText(m_font, "Left Stick: [" + std::to_string(getGamepadStickAxisX(gamepads[m_activeGamepad], InputGamepadStick::Left)) + "; " + std::to_string(getGamepadStickAxisY(gamepads[m_activeGamepad], InputGamepadStick::Left)) + "]", Math::vec2(5.0, 80.0f), Math::vec4(1.0f));
+			drawUIText(m_font, "Right Stick: [" + std::to_string(getGamepadStickAxisX(gamepads[m_activeGamepad], InputGamepadStick::Right)) + "; " + std::to_string(getGamepadStickAxisY(gamepads[m_activeGamepad], InputGamepadStick::Right)) + "]", Math::vec2(5.0, 110.0f), Math::vec4(1.0f));
+			drawUIText(m_font, "Left Trigger: " + std::to_string(getGamepadLeftTrigger(gamepads[m_activeGamepad])), Math::vec2(5.0, 140.0f), Math::vec4(1.0f));
+			drawUIText(m_font, "Right Trigger: " + std::to_string(getGamepadRightTrigger(gamepads[m_activeGamepad])), Math::vec2(5.0, 170.0f), Math::vec4(1.0f));
 		}
 	}
 
