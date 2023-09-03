@@ -1,8 +1,8 @@
 #pragma once
-#include "../Core/scripting/ntshengn_scripting_api.h"
+#include "../Core/scripting/ntshengn_script.h"
 
 using namespace NtshEngn;
-struct GamepadTestScript : public ScriptingAPI {
+struct GamepadTestScript : public Script {
 	NTSHENGN_SCRIPT(GamepadTestScript);
 
 	void init() {
