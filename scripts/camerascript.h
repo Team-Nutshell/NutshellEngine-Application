@@ -1,8 +1,8 @@
 #pragma once
-#include "../Core/scripting/ntshengn_scripting_api.h"
+#include "../Core/scripting/ntshengn_script.h"
 
 using namespace NtshEngn;
-struct CameraScript : public ScriptingAPI {
+struct CameraScript : public Script {
 	NTSHENGN_SCRIPT(CameraScript);
 
 	void init() {

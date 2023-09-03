@@ -1,8 +1,8 @@
 #pragma once
-#include "../Core/scripting/ntshengn_scripting_api.h"
+#include "../Core/scripting/ntshengn_script.h"
 
 using namespace NtshEngn;
-struct CubeScript : public ScriptingAPI {
+struct CubeScript : public Script {
 	NTSHENGN_SCRIPT(CubeScript);
 
 	void init() {
