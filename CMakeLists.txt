@@ -63,5 +63,5 @@ target_compile_definitions(${PROJECT_NAME}
 add_custom_target(CopyAssets
 	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets ${PROJECT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/assets
 	COMMENT "Copy assets from ${CMAKE_SOURCE_DIR}/assets to project build folder ${PROJECT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/assets.")
-	
+
 add_dependencies(${PROJECT_NAME} CopyAssets)
