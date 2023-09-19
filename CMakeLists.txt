@@ -60,6 +60,8 @@ target_compile_definitions(${PROJECT_NAME}
 		$<$<CONFIG:Release>:NTSHENGN_RELEASE>
 		$<$<CONFIG:RelWithDebInfo>:NTSHENGN_DEBUG>)
 
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+add_custom_target(CopyAssets
 	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets ${PROJECT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/assets
-	COMMENT "Copy assets to project build folder ${PROJECT_BINARY_DIR}/${CMAKE_CFG_INTDIR}.")
+	COMMENT "Copy assets from ${CMAKE_SOURCE_DIR}/assets to project build folder ${PROJECT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/assets.")
+
+add_dependencies(${PROJECT_NAME} CopyAssets)
