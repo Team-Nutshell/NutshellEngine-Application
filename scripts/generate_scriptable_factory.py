@@ -1,5 +1,5 @@
-# Python script used to auto-generate the script factory
-# Called from CMake, do not call manually
+# Python script used to auto-generate the scriptable factory
+# Called from CMake
 
 import sys
 import os
@@ -14,12 +14,14 @@ output += "#include \"../Core/Common/ecs/components/ntshengn_ecs_scriptable.h\"\
 output += "#include <string>\n\n"
 for filePath in os.listdir(sys.argv[1] + "/scripts/"):
 	if ((filePath != "generate_scriptable_factory.py") and (filePath != "ntshengn_scriptable_factory.h")):
-		output += "#include \"" + filePath + "\"\n"
 		with open(sys.argv[1] + "/scripts/" + filePath, 'r') as file:
 			fileContent = file.read()
-			scriptName = re.search("NTSHENGN_SCRIPT\(.*\)", fileContent)
-			scriptNames.append(scriptName.group()[16:len(scriptName.group()) - 1].strip())
-output += "\n"
+			scriptName = re.search("NTSHENGN_SCRIPT(.*)", fileContent)
+			if (scriptName != None):
+				output += "#include \"" + filePath + "\"\n"
+				scriptNames.append(scriptName.group()[16:len(scriptName.group()) - 2].strip())
+if (len(scriptNames) != 0):
+	output += "\n"
 
 output += "namespace NtshEngn {\n\n"
 output += "\tnamespace ScriptableFactory {\n\n"

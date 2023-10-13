@@ -4,7 +4,6 @@
 #include "../Core/Common/ecs/components/ntshengn_ecs_scriptable.h"
 #include <string>
 
-
 namespace NtshEngn {
 
 	namespace ScriptableFactory {
