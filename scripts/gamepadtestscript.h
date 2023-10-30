@@ -118,6 +118,42 @@ private:
 		return Math::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
+	enum class UIElementState {
+		None,
+		Pressed,
+		Held,
+		Released,
+		Hovered
+	};
+
+	UIElementState drawUIButton(const Math::vec2& position, const Math::vec2& size, const Math::vec4& color = Math::vec4(1.0f, 1.0f, 1.0f, 1.0f), InputMouseButton mouseButton = InputMouseButton::One) {
+		if (!graphicsModule || !windowModule) {
+			return UIElementState::None;
+		}
+
+		graphicsModule->drawUIRectangle(position, size, color);
+
+		int cursorPositionX = windowModule->getCursorPositionX(windowModule->getMainWindowID());
+		int cursorPositionY = windowModule->getCursorPositionY(windowModule->getMainWindowID());
+		if ((cursorPositionX >= position.x) && (cursorPositionX <= (position.x + size.x)) &&
+			(cursorPositionY >= position.y) && (cursorPositionY <= (position.y + size.y))) {
+			if (getMouseButtonState(mouseButton) == InputState::Pressed) {
+				return UIElementState::Pressed;
+			}
+			else if (getMouseButtonState(mouseButton) == InputState::Held) {
+				return UIElementState::Held;
+			}
+			else if (getMouseButtonState(mouseButton) == InputState::Released) {
+				return UIElementState::Released;
+			}
+			else {
+				return UIElementState::Hovered;
+			}
+		}
+
+		return UIElementState::None;
+	}
+
 private:
 	size_t m_activeGamepad = 0;
 
