@@ -24,7 +24,7 @@ else()
 	message(STATUS "Copy NutshellEngine\'s core from Git repository to ${CMAKE_CURRENT_SOURCE_DIR}/Core")
 	FetchContent_Declare(
 		Core
-		GIT_REPOSITORY https://github.com/Team-Nutshell/NutshellEngine-Core
+		GIT_REPOSITORY https://github.com/Team-Nutshell/NutshellEngine
 		GIT_TAG main
 		SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Core"
 	)
