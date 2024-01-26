@@ -29,17 +29,7 @@
 				"modelPath": "assets/models/model.ntmd"
 			},
 			"collidable": {
-				"type": "AABB",
-				"min": [
-					-1.0,
-					-1.0,
-					-1.0
-				],
-				"max": [
-					1.0,
-					1.0,
-					1.0
-				]
+				"type": "Box"
 			}
 		},
 		{
