@@ -48,17 +48,20 @@ struct CameraScript : public Script {
 			m_pitch = std::max(-89.0f, std::min(89.0f, m_pitch - yOffset));
 		}
 
-		m_distance = std::max(0.0f, std::min(m_distance - getMouseScrollOffsetY(), 100.0f));
+		m_distance = std::max(2.0f, std::min(m_distance - getMouseScrollOffsetY(), 100.0f));
 
-		float yawRad = Math::toRad(m_yaw);
-		float pitchRad = Math::toRad(m_pitch);
+		const float yawRad = Math::toRad(m_yaw);
+		const float pitchRad = Math::toRad(m_pitch);
 
 		transform.position.x = std::cos(pitchRad) * std::cos(yawRad);
 		transform.position.y = -std::sin(pitchRad);
 		transform.position.z = std::cos(pitchRad) * std::sin(yawRad);
+		transform.position = Math::normalize(transform.position);
 		transform.position *= m_distance;
 		transform.position += otherTransform.position;
-		transform.rotation = normalize(otherTransform.position - transform.position);
+
+		Camera& camera = getEntityComponent<Camera>(entityID);
+		camera.forward = normalize(otherTransform.position - transform.position);
 	}
 
 	void destroy() {
