@@ -1,5 +1,5 @@
 #pragma once
-#include "../Core/scripting/ntshengn_script.h"
+#include "../Common/script/ntshengn_script.h"
 
 using namespace NtshEngn;
 struct CubeScript : public Script {
@@ -10,24 +10,24 @@ struct CubeScript : public Script {
 
 	void update(double dt) {
 		Transform& transform = getEntityComponent<Transform>(entityID);
-		Transform& cameraTransform = getEntityComponent<Transform>(m_camera);
+		Camera& camera = getEntityComponent<Camera>(m_camera);
 		const float cubeSpeed = m_cubeSpeed * static_cast<float>(dt);
 
 		if (getKeyState(InputKeyboardKey::W) == InputState::Held) {
-			transform.position.x += (cameraTransform.rotation.x * cubeSpeed);
-			transform.position.z += (cameraTransform.rotation.z * cubeSpeed);
+			transform.position.x += (camera.forward.x * cubeSpeed);
+			transform.position.z += (camera.forward.z * cubeSpeed);
 		}
 		if (getKeyState(InputKeyboardKey::S) == InputState::Held) {
-			transform.position.x -= (cameraTransform.rotation.x * cubeSpeed);
-			transform.position.z -= (cameraTransform.rotation.z * cubeSpeed);
+			transform.position.x -= (camera.forward.x * cubeSpeed);
+			transform.position.z -= (camera.forward.z * cubeSpeed);
 		}
 		if (getKeyState(InputKeyboardKey::A) == InputState::Held) {
-			Math::vec3 t = Math::normalize(Math::vec3(-cameraTransform.rotation.z, 0.0, cameraTransform.rotation.x));
+			Math::vec3 t = Math::normalize(Math::vec3(-camera.forward.z, 0.0, camera.forward.x));
 			transform.position.x -= (t.x * cubeSpeed);
 			transform.position.z -= (t.z * cubeSpeed);
 		}
 		if (getKeyState(InputKeyboardKey::D) == InputState::Held) {
-			Math::vec3 t = Math::normalize(Math::vec3(-cameraTransform.rotation.z, 0.0, cameraTransform.rotation.x));
+			Math::vec3 t = Math::normalize(Math::vec3(-camera.forward.z, 0.0, camera.forward.x));
 			transform.position.x += (t.x * cubeSpeed);
 			transform.position.z += (t.z * cubeSpeed);
 		}
