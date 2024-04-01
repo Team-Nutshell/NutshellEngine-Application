@@ -8,7 +8,6 @@ NtshEngn::Scriptable NtshEngn::ScriptManager::createScriptable(const std::string
 
 	Scriptable scriptable;
 
-
 	return scriptable;
 }
 
