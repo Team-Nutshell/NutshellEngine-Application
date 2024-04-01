@@ -85,8 +85,13 @@ elseif(NOT NTSHENGN_INSTALL_SCRIPTS_PATH STREQUAL "NtshEngn_InstallScripts_NOTFO
 	message(WARNING "Could not find NutshellEngine\'s directory at ${NTSHENGN_INSTALL_SCRIPTS_PATH}.")
 endif()
 
+add_custom_target(GenerateScriptManager
+	COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/generate_script_manager.py ${CMAKE_CURRENT_SOURCE_DIR}
+	COMMENT "Generate ${SCRIPTS_DIRECTORY}/ntshengn_script_manager.cpp.")
+
 add_custom_target(CopyAssets
 	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets ${PROJECT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/assets
 	COMMENT "Copy assets from ${CMAKE_SOURCE_DIR}/assets to project build folder ${PROJECT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/assets.")
 
+add_dependencies(${PROJECT_NAME} GenerateScriptManager)
 add_dependencies(${PROJECT_NAME} CopyAssets)
