@@ -32,7 +32,9 @@ for i, scriptName in enumerate(scriptNames):
 	if (i != 0):
 		output += "else "
 	output += "if (scriptName == \"" + scriptName + "\") { scriptable.script = createScript<" + scriptName + ">(); }\n"
-output += "\n\treturn scriptable;\n"
+if (len(scriptNames) != 0):
+	output += "\n"
+output += "\treturn scriptable;\n"
 output += "}\n\n"
 output += "extern \"C\" NTSHENGN_SCRIPT_MANAGER_API NtshEngn::ScriptManagerInterface* createScriptManager() {\n"
 output += "\treturn new NtshEngn::ScriptManager;\n"
