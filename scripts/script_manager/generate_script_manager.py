@@ -17,7 +17,7 @@ for filePath in os.listdir(sys.argv[1] + "/scripts/"):
 			fileContent = file.read()
 			scriptName = re.search("NTSHENGN_SCRIPT(.*)", fileContent)
 			if (scriptName != None):
-				output += "#include \"" + filePath + "\"\n"
+				output += "#include \"../" + filePath + "\"\n"
 				scriptNames.append(scriptName.group()[16:len(scriptName.group()) - 2].strip())
 if (len(scriptNames) != 0):
 	output += "\n"
