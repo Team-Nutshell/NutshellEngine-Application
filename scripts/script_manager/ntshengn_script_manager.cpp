@@ -3,7 +3,7 @@
 #pragma once
 #include "ntshengn_script_manager.h"
 
-#include "gamepadtestscript.h"
+#include "../gamepadtestscript.h"
 
 NtshEngn::Scriptable NtshEngn::ScriptManager::createScriptable(const std::string& scriptName) {
 	Scriptable scriptable;
