@@ -3,7 +3,7 @@
 #pragma once
 #include "ntshengn_script_manager.h"
 
-#include "camerascript.h"
+#include "../camerascript.h"
 
 NtshEngn::Scriptable NtshEngn::ScriptManager::createScriptable(const std::string& scriptName) {
 	Scriptable scriptable;
