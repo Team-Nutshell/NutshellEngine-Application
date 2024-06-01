@@ -13,6 +13,11 @@ struct CameraScript : public Script {
 		m_prevMouseY = getWindowHeight() / 2;
 		setCursorPosition(m_prevMouseX, m_prevMouseY);
 
+		const Transform& transform = getEntityComponent<Transform>(entityID);
+
+		m_yaw = Math::toDeg(transform.rotation.y);
+		m_pitch = Math::toDeg(transform.rotation.x);
+
 		const Camera& camera = getEntityComponent<Camera>(entityID);
 		Math::vec3 cameraForward = Math::normalize(camera.forward);
 
