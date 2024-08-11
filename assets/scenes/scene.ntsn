@@ -26,7 +26,8 @@
 		{
 			"name": "Cube",
 			"renderable": {
-				"modelPath": "assets/models/model.ntmd"
+				"modelPath": "assets/models/model.ntmd",
+				"primitiveIndex": 0
 			},
 			"collidable": {
 				"type": "Box"
