@@ -127,14 +127,10 @@ private:
 	};
 
 	UIElementState drawUIButton(const Math::vec2& position, const Math::vec2& size, const Math::vec4& color = Math::vec4(1.0f, 1.0f, 1.0f, 1.0f), InputMouseButton mouseButton = InputMouseButton::One) {
-		if (!graphicsModule || !windowModule) {
-			return UIElementState::None;
-		}
+		drawUIRectangle(position, size, color);
 
-		graphicsModule->drawUIRectangle(position, size, color);
-
-		int cursorPositionX = windowModule->getCursorPositionX(windowModule->getMainWindowID());
-		int cursorPositionY = windowModule->getCursorPositionY(windowModule->getMainWindowID());
+		int cursorPositionX = getCursorPositionX(getMainWindowID());
+		int cursorPositionY = getCursorPositionY(getMainWindowID());
 		if ((cursorPositionX >= position.x) && (cursorPositionX <= (position.x + size.x)) &&
 			(cursorPositionY >= position.y) && (cursorPositionY <= (position.y + size.y))) {
 			if (getMouseButtonState(mouseButton) == InputState::Pressed) {
