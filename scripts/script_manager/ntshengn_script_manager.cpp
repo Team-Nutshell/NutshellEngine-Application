@@ -2,8 +2,8 @@
 
 #include "ntshengn_script_manager.h"
 
-#include "../camerascript.h"
-#include "../cubescript.h"
+#include "../CameraScript.h"
+#include "../CubeScript.h"
 
 NtshEngn::Scriptable NtshEngn::ScriptManager::createScriptable(const std::string& scriptName) {
 	Scriptable scriptable;
