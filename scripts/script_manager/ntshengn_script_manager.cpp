@@ -2,7 +2,7 @@
 
 #include "ntshengn_script_manager.h"
 
-#include "../camerascript.h"
+#include "../CameraScript.h"
 
 NtshEngn::Scriptable NtshEngn::ScriptManager::createScriptable(const std::string& scriptName) {
 	Scriptable scriptable;
