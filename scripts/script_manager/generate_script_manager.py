@@ -96,13 +96,12 @@ if len(scriptNames) != 0:
 output += "\treturn scriptable;\n"
 output += "}\n\n"
 
-for i, filePath in enumerate(scriptPaths):
-	with open(filePath, 'r') as file:
-		output += "void " + scriptNames[i] + "::createEditableScriptVariableMap() {\n"
-		for scriptEditableVariable in scriptEditableVariables[i]:
-			if scriptEditableVariable[1] != "Unknown":
-				output += "\teditableScriptVariables[\"" + scriptEditableVariable[0] + "\"] = { NtshEngn::EditableScriptVariableType::" + scriptEditableVariable[1] + ", &" + scriptEditableVariable[0] + " };\n"
-		output += "}\n\n"
+for i, scriptName in enumerate(scriptNames):
+	output += "void " + scriptName + "::createEditableScriptVariableMap() {\n"
+	for scriptEditableVariable in scriptEditableVariables[i]:
+		if scriptEditableVariable[1] != "Unknown":
+			output += "\teditableScriptVariables[\"" + scriptEditableVariable[0] + "\"] = { NtshEngn::EditableScriptVariableType::" + scriptEditableVariable[1] + ", &" + scriptEditableVariable[0] + " };\n"
+	output += "}\n\n"
 
 output += "extern \"C\" NTSHENGN_SCRIPT_MANAGER_API NtshEngn::ScriptManagerInterface* createScriptManager() {\n"
 output += "\treturn new NtshEngn::ScriptManager;\n"
