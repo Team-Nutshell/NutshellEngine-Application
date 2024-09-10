@@ -8,10 +8,24 @@
 NtshEngn::Scriptable NtshEngn::ScriptManager::createScriptable(const std::string& scriptName) {
 	Scriptable scriptable;
 
-	if (scriptName == "CameraScript") { scriptable.script = createScript<CameraScript>(); }
-	else if (scriptName == "CubeScript") { scriptable.script = createScript<CubeScript>(); }
+	if (scriptName == "CameraScript") {
+		CameraScript* script = createScript<CameraScript>();
+		script->createEditableScriptVariableMap();
+		scriptable.script = script;
+	}
+	else if (scriptName == "CubeScript") {
+		CubeScript* script = createScript<CubeScript>();
+		script->createEditableScriptVariableMap();
+		scriptable.script = script;
+	}
 
 	return scriptable;
+}
+
+void CameraScript::createEditableScriptVariableMap() {
+}
+
+void CubeScript::createEditableScriptVariableMap() {
 }
 
 extern "C" NTSHENGN_SCRIPT_MANAGER_API NtshEngn::ScriptManagerInterface* createScriptManager() {
