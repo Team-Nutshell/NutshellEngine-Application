@@ -7,9 +7,16 @@
 NtshEngn::Scriptable NtshEngn::ScriptManager::createScriptable(const std::string& scriptName) {
 	Scriptable scriptable;
 
-	if (scriptName == "GamepadTestScript") { scriptable.script = createScript<GamepadTestScript>(); }
+	if (scriptName == "GamepadTestScript") {
+		GamepadTestScript* script = createScript<GamepadTestScript>();
+		script->createEditableScriptVariableMap();
+		scriptable.script = script;
+	}
 
 	return scriptable;
+}
+
+void GamepadTestScript::createEditableScriptVariableMap() {
 }
 
 extern "C" NTSHENGN_SCRIPT_MANAGER_API NtshEngn::ScriptManagerInterface* createScriptManager() {
