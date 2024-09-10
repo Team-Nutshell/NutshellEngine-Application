@@ -70,7 +70,7 @@ for filePath in os.listdir(sys.argv[1] + "/scripts/"):
 				editableScriptVariableIndex = currentParsing.find(editableVariableDefine)
 				while editableScriptVariableIndex != -1:
 					currentParsing = currentParsing[editableScriptVariableIndex + len(editableVariableDefine):]
-					variableLine = currentParsing[:currentParsing.find('\n')]
+					variableLine = currentParsing[:currentParsing.find(';')]
 					variableLineTokens = variableLine.split()
 					scriptEditableVariables[-1].append(parseVariableLineTokens(variableLineTokens, usingNamespaceStd, usingNamespaceNtshEngnMath))
 					editableScriptVariableIndex = currentParsing.find(editableVariableDefine)
