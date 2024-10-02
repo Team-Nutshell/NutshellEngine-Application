@@ -16,7 +16,7 @@ struct CameraScript : public Script {
 	void update(float dt) {
 		NTSHENGN_UNUSED(dt);
 
-		if (getKeyState(InputKeyboardKey::R) == InputState::Pressed) {
+		if (getKeyState(InputKeyboardKey::Escape) == InputState::Pressed) {
 			m_mouseMiddleMode = !m_mouseMiddleMode;
 			setCursorVisibility(!m_mouseMiddleMode);
 			if (m_mouseMiddleMode) {
