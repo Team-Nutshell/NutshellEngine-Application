@@ -25,7 +25,7 @@ struct GamepadTestScript : public Script {
 		m_stickImage = getImageID(*loadImage("assets/images/stick.png"));
 	}
 
-	void update(double dt) {
+	void update(float dt) {
 		NTSHENGN_UNUSED(dt);
 
 		const Math::vec2 windowSize = Math::vec2(static_cast<float>(getWindowWidth()), static_cast<float>(getWindowHeight()));
