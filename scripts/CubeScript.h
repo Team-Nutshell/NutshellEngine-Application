@@ -8,10 +8,10 @@ struct CubeScript : public Script {
 	void init() {
 	}
 
-	void update(double dt) {
+	void update(float dt) {
 		Transform& transform = getEntityComponent<Transform>(entityID);
 		Camera& camera = getEntityComponent<Camera>(m_camera);
-		const float cubeSpeed = m_cubeSpeed * static_cast<float>(dt);
+		const float cubeSpeed = m_cubeSpeed * dt;
 
 		if (getKeyState(InputKeyboardKey::W) == InputState::Held) {
 			transform.position.x += (camera.forward.x * cubeSpeed);
@@ -37,7 +37,7 @@ struct CubeScript : public Script {
 	}
 
 private:
-	const float m_cubeSpeed = 0.015f;
+	const float m_cubeSpeed = 1.5f;
 
 	Entity m_camera = 0;
 };

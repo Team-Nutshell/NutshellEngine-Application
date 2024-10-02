@@ -13,7 +13,7 @@ struct CameraScript : public Script {
 		setCursorPosition(m_prevMouseX, m_prevMouseY);
 	}
 
-	void update(double dt) {
+	void update(float dt) {
 		NTSHENGN_UNUSED(dt);
 
 		if (getKeyState(InputKeyboardKey::R) == InputState::Pressed) {
@@ -71,7 +71,6 @@ private:
 
 	bool m_mouseMiddleMode = false;
 
-	const float m_cameraSpeed = 0.0015f;
 	const float m_mouseSensitivity = 0.12f;
 
 	int m_prevMouseX = 0;
