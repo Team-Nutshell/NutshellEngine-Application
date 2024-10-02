@@ -24,7 +24,7 @@ struct CameraScript : public Script {
 		m_forwardPitch = -std::asin(cameraForward.y);
 	}
 
-	void update(double dt) {
+	void update(float dt) {
 		GamepadID gamepad = getConnectedGamepads().empty() ? NTSHENGN_GAMEPAD_UNKNOWN : getConnectedGamepads()[0];
 		if (gamepad != NTSHENGN_GAMEPAD_UNKNOWN) {
 			if ((getGamepadButtonState(gamepad, InputGamepadButton::Any) == InputState::Pressed) ||
@@ -118,7 +118,7 @@ struct CameraScript : public Script {
 		newForward = Math::normalize(newForward);
 
 		Math::vec3 addedPosition = Math::vec3(0.0f, 0.0f, 0.0f);
-		const float cameraSpeed = m_cameraSpeed * static_cast<float>(dt);
+		const float cameraSpeed = m_cameraSpeed * dt;
 
 		if (m_keyboardMode) {
 			if ((getKeyState(InputKeyboardKey::W) == InputState::Held)) {
@@ -184,7 +184,7 @@ private:
 
 	bool m_mouseMiddleMode = false;
 
-	const float m_cameraSpeed = 0.0015f;
+	const float m_cameraSpeed = 1.5f;
 	const float m_mouseSensitivity = 0.12f;
 
 	int m_prevMouseX = 0;
