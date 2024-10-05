@@ -31,7 +31,9 @@ struct CameraScript : public Script {
 				(getGamepadLeftTrigger(gamepad) > 0.1f) ||
 				(getGamepadRightTrigger(gamepad) > 0.1f) ||
 				(std::abs(getGamepadStickAxisX(gamepad, InputGamepadStick::Left)) > 0.1f) ||
-				(std::abs(getGamepadStickAxisX(gamepad, InputGamepadStick::Right)) > 0.1f)) {
+				(std::abs(getGamepadStickAxisY(gamepad, InputGamepadStick::Left)) > 0.1f) ||
+				(std::abs(getGamepadStickAxisX(gamepad, InputGamepadStick::Right)) > 0.1f) ||
+				(std::abs(getGamepadStickAxisY(gamepad, InputGamepadStick::Right)) > 0.1f)) {
 				m_keyboardMode = false;
 			}
 		}
