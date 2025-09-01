@@ -8,7 +8,7 @@ struct GamepadTestScript : public Script {
 	void init() {
 		setWindowResizable(false);
 
-		m_font = getFontID(*loadFont("assets/fonts/JetBrainsMono-Regular.ttf", 32.0f));
+		m_font = getFontID(*loadFontBitmap("assets/fonts/JetBrainsMono-Regular.ttf", 32.0f));
 
 		m_controllerImage = getImageID(*loadImage("assets/images/controller.png"));
 
@@ -42,10 +42,10 @@ struct GamepadTestScript : public Script {
 			else if (buttonState == UIElementState::Pressed) {
 				m_activeGamepad = static_cast<size_t>(i);
 			}
-			drawUIText(m_font, std::to_string(i), Math::vec2(37.0f + (75.0f * static_cast<float>(i)), 685.0f), Math::vec4((gamepads.size() > static_cast<size_t>(i)) ? Math::vec2(0.0f, 1.0f) : Math::vec2(1.0, 0.0f), 0.0f, 1.0f));
+			drawUIText(m_font, std::to_string(i), Math::vec2(37.0f + (75.0f * static_cast<float>(i)), 685.0f), Math::vec2(1.0f, 1.0f), Math::vec4((gamepads.size() > static_cast<size_t>(i)) ? Math::vec2(0.0f, 1.0f) : Math::vec2(1.0, 0.0f), 0.0f, 1.0f));
 		}
 
-		drawUIText(m_font, "[" + std::to_string(m_activeGamepad) + "] " + ((gamepads.size() <= m_activeGamepad) ? "No gamepad is detected." : getGamepadName(gamepads[m_activeGamepad])), Math::vec2(5.0f, 30.0f), Math::vec4(1.0f));
+		drawUIText(m_font, "[" + std::to_string(m_activeGamepad) + "] " + ((gamepads.size() <= m_activeGamepad) ? "No gamepad is detected." : getGamepadName(gamepads[m_activeGamepad])), Math::vec2(5.0f, 30.0f), Math::vec2(1.0f, 1.0f), Math::vec4(1.0f));
 		if (gamepads.size() > m_activeGamepad) {
 			// Face buttons
 			drawUIImage(m_buttonImage, ImageSamplerFilter::Nearest, Math::vec2(791.0f, 343.0f), 0.0f, Math::vec2(2.0f), getColorByState(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::Face1)));
@@ -79,10 +79,10 @@ struct GamepadTestScript : public Script {
 			drawUIImage(m_stickImage, ImageSamplerFilter::Nearest, Math::vec2(717.0f + (20.0f * getGamepadStickAxisX(gamepads[m_activeGamepad], InputGamepadStick::Right)), 391.0f + (20.0f * getGamepadStickAxisY(gamepads[m_activeGamepad], InputGamepadStick::Right))), 0.0f, Math::vec2(2.0f), getColorByStateStick(getGamepadButtonState(gamepads[m_activeGamepad], InputGamepadButton::RightStick)));
 
 			// Values
-			drawUIText(m_font, "Left Stick: [" + std::to_string(getGamepadStickAxisX(gamepads[m_activeGamepad], InputGamepadStick::Left)) + "; " + std::to_string(getGamepadStickAxisY(gamepads[m_activeGamepad], InputGamepadStick::Left)) + "]", Math::vec2(5.0, 80.0f), Math::vec4(1.0f));
-			drawUIText(m_font, "Right Stick: [" + std::to_string(getGamepadStickAxisX(gamepads[m_activeGamepad], InputGamepadStick::Right)) + "; " + std::to_string(getGamepadStickAxisY(gamepads[m_activeGamepad], InputGamepadStick::Right)) + "]", Math::vec2(5.0, 110.0f), Math::vec4(1.0f));
-			drawUIText(m_font, "Left Trigger: " + std::to_string(getGamepadLeftTrigger(gamepads[m_activeGamepad])), Math::vec2(5.0, 140.0f), Math::vec4(1.0f));
-			drawUIText(m_font, "Right Trigger: " + std::to_string(getGamepadRightTrigger(gamepads[m_activeGamepad])), Math::vec2(5.0, 170.0f), Math::vec4(1.0f));
+			drawUIText(m_font, "Left Stick: [" + std::to_string(getGamepadStickAxisX(gamepads[m_activeGamepad], InputGamepadStick::Left)) + "; " + std::to_string(getGamepadStickAxisY(gamepads[m_activeGamepad], InputGamepadStick::Left)) + "]", Math::vec2(5.0, 80.0f), Math::vec2(1.0f, 1.0f), Math::vec4(1.0f));
+			drawUIText(m_font, "Right Stick: [" + std::to_string(getGamepadStickAxisX(gamepads[m_activeGamepad], InputGamepadStick::Right)) + "; " + std::to_string(getGamepadStickAxisY(gamepads[m_activeGamepad], InputGamepadStick::Right)) + "]", Math::vec2(5.0, 110.0f), Math::vec2(1.0f, 1.0f), Math::vec4(1.0f));
+			drawUIText(m_font, "Left Trigger: " + std::to_string(getGamepadLeftTrigger(gamepads[m_activeGamepad])), Math::vec2(5.0, 140.0f), Math::vec2(1.0f, 1.0f), Math::vec4(1.0f));
+			drawUIText(m_font, "Right Trigger: " + std::to_string(getGamepadRightTrigger(gamepads[m_activeGamepad])), Math::vec2(5.0, 170.0f), Math::vec2(1.0f, 1.0f), Math::vec4(1.0f));
 		}
 	}
 
