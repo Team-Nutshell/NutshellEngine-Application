@@ -93,6 +93,8 @@ if len(scriptNames) == 0:
 output += "\tScriptable scriptable;\n"
 if len(scriptNames) != 0:
 	output += "\tScriptBase* script = nullptr;\n\n"
+else:
+	output += "\n"
 for i, scriptName in enumerate(scriptNames):
 	output += "\t"
 	if i != 0:
