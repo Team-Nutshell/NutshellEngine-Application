@@ -6,9 +6,13 @@
 
 NtshEngn::Scriptable NtshEngn::ScriptManager::createScriptable(const std::string& scriptName) {
 	Scriptable scriptable;
+	ScriptBase* script = nullptr;
 
 	if (scriptName == "CameraScript") {
-		CameraScript* script = createScript<CameraScript>();
+		script = createScript<CameraScript>();
+	}
+
+	if (script) {
 		script->createEditableScriptVariableMap();
 		scriptable.script = script;
 	}
