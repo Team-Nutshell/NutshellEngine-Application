@@ -90,7 +90,9 @@ if len(scriptNames) != 0:
 output += "NtshEngn::Scriptable NtshEngn::ScriptManager::createScriptable(const std::string& scriptName) {\n"
 if len(scriptNames) == 0:
 	output += "\tNTSHENGN_UNUSED(scriptName);\n\n"
-output += "\tScriptable scriptable;\n\tScriptBase* script = nullptr;\n\n"
+output += "\tScriptable scriptable;\n\n"
+if len(scriptNames) != 0:
+	output += "\tScriptBase* script = nullptr;\n\n"
 for i, scriptName in enumerate(scriptNames):
 	output += "\t"
 	if i != 0:
